@@ -18,13 +18,13 @@ function LoginPage() {
 			setIsSubmitted(true)
 			const user = await dispatch(login(values)).unwrap()
 
-			if (user.role_name === UserRoles.ADMIN) {
+			if (user.role_name === UserRoles.ADMIN.name) {
 				return navigate('/admin', { replace: true })
 			}
-			if (user.role_name === UserRoles.SALESMAN) {
+			if (user.role_name === UserRoles.SALESMAN.name) {
 				return navigate('/salesman', { replace: true })
 			}
-			if (user.role_name === UserRoles.WAREHOUSE_MANAGER) {
+			if (user.role_name === UserRoles.WAREHOUSE_MANAGER.name) {
 				return navigate('/warehouse-manager', { replace: true })
 			}
 			return navigate(-1)

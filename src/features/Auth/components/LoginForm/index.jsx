@@ -52,7 +52,7 @@ function LoginForm({ onSubmit }) {
 				</div>
 
 				<div className="login-form__form">
-					<Typography.Title className="form-title" level={3}>
+					<Typography.Title className="login-form__title" level={3}>
 						Đăng nhập
 					</Typography.Title>
 

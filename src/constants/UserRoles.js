@@ -1,8 +1,20 @@
 const UserRoles = {
-	ADMIN: 'Quản trị',
-	SALESMAN: 'Nhân viên bán hàng',
-	WAREHOUSE_MANAGER: 'Nhân viên quản lý kho',
-	CUSTOMER: 'Khách hàng',
+	ADMIN: {
+		id: 1,
+		name: 'Quản trị',
+	},
+	SALESMAN: {
+		id: 2,
+		name: 'Nhân viên bán hàng',
+	},
+	WAREHOUSE_MANAGER: {
+		id: 3,
+		name: 'Nhân viên quản lý kho',
+	},
+	CUSTOMER: {
+		id: 4,
+		name: 'Khách hàng',
+	},
 }
 
 export default UserRoles
