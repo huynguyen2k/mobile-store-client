@@ -7,6 +7,7 @@ import PropTypes from 'prop-types'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import './style.scss'
+import { Link } from 'react-router-dom'
 
 LoginForm.propTypes = {
 	onSubmit: PropTypes.func,
@@ -86,7 +87,6 @@ function LoginForm({ onSubmit }) {
 						/>
 
 						<Form.Item
-							style={{ marginBottom: 0 }}
 							wrapperCol={{
 								offset: 6,
 								span: 18,
@@ -101,6 +101,16 @@ function LoginForm({ onSubmit }) {
 								Đăng nhập
 							</Button>
 						</Form.Item>
+
+						<div className="login-form__link-container">
+							<Typography.Text className="text">
+								Bạn chưa có tài khoản?
+							</Typography.Text>
+
+							<Link to="/register" replace className="link">
+								Đăng ký
+							</Link>
+						</div>
 					</Form>
 				</div>
 			</div>

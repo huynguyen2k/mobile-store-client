@@ -29,4 +29,16 @@
 		text-align: center;
 		margin-bottom: 24px;
 	}
+	&__link-container {
+		text-align: right;
+
+		.link {
+			margin-left: 6px;
+			color: var(--primary);
+
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
 }

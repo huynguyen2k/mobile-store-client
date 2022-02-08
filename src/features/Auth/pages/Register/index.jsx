@@ -1,5 +1,7 @@
+import Loading from 'components/Loading'
 import { register } from 'features/Auth/authSlice'
 import RegisterForm from 'features/Auth/components/RegisterForm'
+import useLoading from 'hooks/useLoading'
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -7,6 +9,7 @@ import Swal from 'sweetalert2'
 import './style.scss'
 
 function RegisterPage() {
+	const loading = useLoading()
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
 
@@ -35,6 +38,7 @@ function RegisterPage() {
 
 	return (
 		<>
+			{loading && <Loading />}
 			<RegisterForm onSubmit={handleSubmit} />
 		</>
 	)

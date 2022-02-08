@@ -14,6 +14,7 @@ import {
 } from '@ant-design/icons/lib/icons'
 import UserRoles from 'constants/UserRoles'
 import moment from 'moment'
+import { Link } from 'react-router-dom'
 
 RegisterForm.propTypes = {
 	onSubmit: PropTypes.func,
@@ -153,7 +154,6 @@ function RegisterForm({ onSubmit }) {
 						/>
 
 						<Form.Item
-							style={{ marginBottom: 0 }}
 							wrapperCol={{
 								offset: 6,
 								span: 18,
@@ -168,6 +168,16 @@ function RegisterForm({ onSubmit }) {
 								Đăng ký
 							</Button>
 						</Form.Item>
+
+						<div className="register-form__link-container">
+							<Typography.Text className="text">
+								Bạn đã có tài khoản?
+							</Typography.Text>
+
+							<Link to="/login" replace className="link">
+								Đăng nhập
+							</Link>
+						</div>
 					</Form>
 				</div>
 			</div>
