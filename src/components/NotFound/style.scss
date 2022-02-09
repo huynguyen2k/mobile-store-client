@@ -1,0 +1,23 @@
+.not-found {
+	width: 100%;
+	min-height: 100vh;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	align-items: center;
+
+	&__image {
+		width: 50%;
+	}
+	&__content {
+		margin-top: 32px;
+		width: 50%;
+		text-align: center;
+
+		.title {
+			font-size: 1.5rem;
+			font-weight: 500;
+			line-height: 1.4;
+		}
+	}
+}

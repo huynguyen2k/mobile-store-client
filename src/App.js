@@ -3,7 +3,7 @@ import LoginPage from 'features/Auth/pages/Login'
 import RegisterPage from 'features/Auth/pages/Register'
 import CustomerPage from 'features/UserManagement/pages/Customer'
 import StaffPage from 'features/UserManagement/pages/Staff'
-import Admin from 'layout/Admin'
+import AdminLayout from 'layout/Admin'
 import AuthLayout from 'layout/Auth'
 import { Outlet, Route, Routes } from 'react-router-dom'
 
@@ -16,7 +16,7 @@ function App() {
 					<Route path="/register" element={<RegisterPage />} />
 				</Route>
 
-				<Route path="/admin" element={<Admin />}>
+				<Route path="/admin" element={<AdminLayout />}>
 					<Route path="user" element={<Outlet />}>
 						<Route path="staff" element={<StaffPage />} />
 						<Route path="customer" element={<CustomerPage />} />

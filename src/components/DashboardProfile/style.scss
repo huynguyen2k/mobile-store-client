@@ -1,0 +1,49 @@
+.dashboard-profile {
+	display: flex;
+	align-items: center;
+	padding: 12px;
+	height: 100%;
+	margin-right: 8px;
+
+	cursor: pointer;
+	user-select: none;
+
+	&:hover {
+		background-color: var(--light);
+	}
+
+	&__info {
+		margin-left: 8px;
+		line-height: 1;
+
+		.name {
+			display: block;
+			font-size: 1rem;
+			font-weight: 500;
+		}
+		.role {
+			margin-top: 6px;
+			display: block;
+			font-size: 0.875rem;
+			font-weight: 400;
+		}
+	}
+}
+
+.profile-dropdown {
+	.ant-dropdown-menu {
+		padding: 8px 0;
+	}
+
+	.ant-dropdown-menu-item {
+		padding: 8px 16px;
+	}
+
+	&__item {
+		font-size: 0.875rem;
+
+		.text {
+			margin-left: 6px;
+		}
+	}
+}
