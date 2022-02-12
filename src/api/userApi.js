@@ -13,6 +13,14 @@ const userApi = {
 		const url = '/api/users/get-all-role'
 		return axiosClient.get(url)
 	},
+	getAllStaff() {
+		const url = '/api/users/get-all-staff'
+		return axiosClient.get(url)
+	},
+	getAllCustomer() {
+		const url = '/api/users/get-all-customer'
+		return axiosClient.get(url)
+	},
 }
 
 export default userApi

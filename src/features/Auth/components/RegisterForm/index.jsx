@@ -62,8 +62,8 @@ const schema = yup
 
 function RegisterForm({ onSubmit }) {
 	const form = useForm({
-		mode: 'onBlur',
-		reValidateMode: 'onBlur',
+		mode: 'onChange',
+		reValidateMode: 'onChange',
 		defaultValues: {
 			full_name: '',
 			phone_number: '',

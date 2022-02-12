@@ -34,8 +34,8 @@ function InputField(props) {
 			label={label}
 			name={name}
 			initialValue={field.value}
-			validateStatus={fieldState.invalid ? 'error' : ''}
 			help={fieldState.error?.message}
+			validateStatus={fieldState.invalid ? 'error' : ''}
 		>
 			{restProps.type === 'password' ? (
 				<Input.Password {...field} {...restProps} />
