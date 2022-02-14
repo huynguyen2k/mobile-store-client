@@ -36,14 +36,17 @@ function SelectField(props) {
 			validateStatus={fieldState.invalid ? 'error' : ''}
 		>
 			<Select
-				{...field}
-				{...restProps}
 				allowClear
 				showSearch
 				optionFilterProp="children"
 				filterOption={(input, option) => {
-					return option.children.toLowerCase().includes(input.toLowerCase())
+					return option.children
+						.toLowerCase()
+						.normalize()
+						.includes(input.toLowerCase().normalize())
 				}}
+				{...field}
+				{...restProps}
 			>
 				{optionList.map(option => (
 					<Select.Option key={option.value} value={option.value}>

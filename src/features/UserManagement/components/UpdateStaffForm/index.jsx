@@ -1,32 +1,29 @@
-import {
-	GooglePlusOutlined,
-	LockOutlined,
-	PhoneOutlined,
-	UserOutlined,
-} from '@ant-design/icons/lib/icons'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { Button, Form, Typography } from 'antd'
-import InputField from 'components/FormFields/InputField'
 import React from 'react'
 import PropTypes from 'prop-types'
-import { useForm } from 'react-hook-form'
-import * as yup from 'yup'
 import './style.scss'
-import moment from 'moment'
+import * as yup from 'yup'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { Button, Form, Typography } from 'antd'
 import UploadField from 'components/FormFields/UploadField'
 import SelectField from 'components/FormFields/SelectField'
+import InputField from 'components/FormFields/InputField'
+import { PhoneOutlined, UserOutlined } from '@ant-design/icons/lib/icons'
 import DateField from 'components/FormFields/DateField'
 import RadioField from 'components/FormFields/RadioField'
 import genderList from 'constants/genderList'
+import moment from 'moment'
 
-AddStaffForm.propTypes = {
+UpdateStaffForm.propTypes = {
 	onSubmit: PropTypes.func,
 	roleList: PropTypes.array,
+	updateData: PropTypes.object,
 }
 
-AddStaffForm.defaultProps = {
+UpdateStaffForm.defaultProps = {
 	onSubmit: null,
 	roleList: [],
+	updateData: null,
 }
 
 const schema = yup
@@ -50,42 +47,29 @@ const schema = yup
 						MIN_WORDS
 				)
 			}),
+		gender: yup.number().nullable(),
 		phone_number: yup
 			.string()
 			.required('Bạn phải nhập số điện thoại!')
 			.matches(/^0\d{9}$/g, 'Số điện thoại bạn nhập không hợp lệ!'),
 		date_of_birth: yup.object().nullable(),
-		gender: yup.number().nullable(),
-		email: yup
-			.string()
-			.required('Bạn phải nhập email!')
-			.email('Email bạn nhập không hợp lệ!'),
-		password: yup
-			.string()
-			.required('Bạn phải nhập mật khẩu!')
-			.min(6, 'Mật khẩu phải từ 6-32 ký tự!')
-			.max(32, 'Mật khẩu phải từ 6-32 ký tự!'),
-		confirmPassword: yup
-			.string()
-			.required('Bạn phải nhập mật khẩu xác nhận!')
-			.oneOf([yup.ref('password')], 'Mật khẩu xác nhận không khớp!'),
 	})
 	.required()
 
-function AddStaffForm({ onSubmit, roleList }) {
+function UpdateStaffForm({ onSubmit, roleList, updateData }) {
 	const form = useForm({
 		mode: 'onBlur',
 		reValidateMode: 'onBlur',
 		defaultValues: {
+			id: updateData?.id,
 			avatar: null,
-			role_id: null,
-			full_name: '',
-			phone_number: '',
-			date_of_birth: null,
-			gender: null,
-			email: '',
-			password: '',
-			confirmPassword: '',
+			full_name: updateData?.full_name,
+			date_of_birth: updateData?.date_of_birth
+				? moment(updateData?.date_of_birth, 'YYYY-MM-DD', true)
+				: null,
+			gender: updateData?.gender,
+			phone_number: updateData?.phone_number,
+			role_id: updateData?.role_id,
 		},
 		resolver: yupResolver(schema),
 	})
@@ -93,7 +77,6 @@ function AddStaffForm({ onSubmit, roleList }) {
 	const handleSubmit = async values => {
 		const newValues = {
 			...values,
-			created_date: moment().format('YYYY-MM-DD HH:mm:ss'),
 		}
 
 		if (newValues.avatar) {
@@ -101,15 +84,16 @@ function AddStaffForm({ onSubmit, roleList }) {
 		} else {
 			delete newValues.avatar
 		}
+
 		if (newValues.date_of_birth) {
 			newValues.date_of_birth = newValues.date_of_birth.format('YYYY-MM-DD')
 		} else {
 			delete newValues.date_of_birth
 		}
+
 		if (newValues.gender === null) {
 			delete newValues.gender
 		}
-		delete newValues.confirmPassword
 
 		if (onSubmit) {
 			await onSubmit(newValues)
@@ -122,7 +106,7 @@ function AddStaffForm({ onSubmit, roleList }) {
 				level={4}
 				style={{ textAlign: 'center', marginBottom: 24 }}
 			>
-				Thêm nhân viên
+				Cập nhật thông tin
 			</Typography.Title>
 
 			<Form
@@ -137,7 +121,12 @@ function AddStaffForm({ onSubmit, roleList }) {
 				autoComplete="off"
 				onSubmitCapture={form.handleSubmit(handleSubmit)}
 			>
-				<UploadField name="avatar" form={form} label="Ảnh đại diện" />
+				<UploadField
+					name="avatar"
+					form={form}
+					label="Ảnh đại diện"
+					defaultUrl={updateData?.avatar}
+				/>
 
 				<SelectField
 					name="role_id"
@@ -155,6 +144,13 @@ function AddStaffForm({ onSubmit, roleList }) {
 					placeholder="Nhập họ tên nhân viên"
 				/>
 
+				<RadioField
+					name="gender"
+					form={form}
+					label="Giới tính"
+					optionList={genderList}
+				/>
+
 				<InputField
 					form={form}
 					name="phone_number"
@@ -170,39 +166,6 @@ function AddStaffForm({ onSubmit, roleList }) {
 					placeholder="Chọn năm sinh của nhân viên"
 				/>
 
-				<RadioField
-					name="gender"
-					form={form}
-					label="Giới tính"
-					optionList={genderList}
-				/>
-
-				<InputField
-					form={form}
-					name="email"
-					label="Email"
-					prefix={<GooglePlusOutlined />}
-					placeholder="Nhập email nhân viên"
-				/>
-
-				<InputField
-					form={form}
-					name="password"
-					label="Mật khẩu"
-					type="password"
-					prefix={<LockOutlined />}
-					placeholder="Nhập mật khẩu cho nhân viên"
-				/>
-
-				<InputField
-					form={form}
-					name="confirmPassword"
-					label="Xác nhận"
-					type="password"
-					prefix={<LockOutlined />}
-					placeholder="Nhập lại mật khẩu xác nhận"
-				/>
-
 				<Form.Item
 					wrapperCol={{
 						offset: 5,
@@ -216,7 +179,7 @@ function AddStaffForm({ onSubmit, roleList }) {
 						htmlType="submit"
 						loading={form.formState.isSubmitting}
 					>
-						Thêm nhân viên
+						Cập nhật
 					</Button>
 				</Form.Item>
 			</Form>
@@ -224,4 +187,4 @@ function AddStaffForm({ onSubmit, roleList }) {
 	)
 }
 
-export default AddStaffForm
+export default UpdateStaffForm

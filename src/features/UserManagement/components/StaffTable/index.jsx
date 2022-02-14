@@ -4,7 +4,17 @@ import {
 	SearchOutlined,
 	UserAddOutlined,
 } from '@ant-design/icons/lib/icons'
-import { Avatar, Button, Input, Space, Table, Tag, Typography } from 'antd'
+import {
+	Avatar,
+	Button,
+	Input,
+	Popconfirm,
+	Space,
+	Table,
+	Tag,
+	Typography,
+	Tooltip,
+} from 'antd'
 import UserRoles from 'constants/UserRoles'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
@@ -71,9 +81,9 @@ function StaffTable(props) {
 		}
 	}
 
-	const handleDeleteStaff = idList => {
+	const handleDeleteStaff = async idList => {
 		if (typeof onDeleteStaff === 'function') {
-			onDeleteStaff(idList)
+			await onDeleteStaff(idList)
 		}
 	}
 
@@ -156,8 +166,16 @@ function StaffTable(props) {
 					sortDirections: ['descend', 'ascend'],
 					render: value => formatDateTime(value),
 					sorter: (date1, date2) => {
-						const moment1 = moment(date1, 'YYYY-MM-DD HH:mm:ss', true)
-						const moment2 = moment(date2, 'YYYY-MM-DD HH:mm:ss', true)
+						const moment1 = moment(
+							date1.created_date,
+							'YYYY-MM-DD HH:mm:ss',
+							true
+						)
+						const moment2 = moment(
+							date2.created_date,
+							'YYYY-MM-DD HH:mm:ss',
+							true
+						)
 
 						if (moment1.isSameOrBefore(moment2)) {
 							return -1
@@ -186,7 +204,7 @@ function StaffTable(props) {
 											backgroundColor: 'var(--mark-color)',
 										}}
 										searchWords={[searchText]}
-										textToHighlight={text ? text.toString() : ''}
+										textToHighlight={text ? text.toString().normalize() : ''}
 									/>
 								</span>
 							</Space>
@@ -233,43 +251,69 @@ function StaffTable(props) {
 				{
 					title: () => (
 						<Space wrap align="center" size="small">
-							<Button
-								type="primary"
-								shape="circle"
-								icon={<UserAddOutlined />}
-								style={{
-									borderColor: 'var(--success)',
-									backgroundColor: 'var(--success)',
-								}}
-								onClick={handleAddStaff}
-							/>
-							<Button
-								danger
-								type="primary"
-								shape="circle"
-								icon={<DeleteOutlined />}
-								onClick={() => handleDeleteStaff(selectedRowKeys)}
-							/>
+							<Tooltip placement="top" title="Thêm nhân viên mới">
+								<Button
+									type="primary"
+									shape="circle"
+									icon={<UserAddOutlined />}
+									style={{
+										borderColor: 'var(--success)',
+										backgroundColor: 'var(--success)',
+									}}
+									onClick={handleAddStaff}
+								/>
+							</Tooltip>
+
+							<Tooltip placement="topRight" title="Xóa nhân viên đã chọn">
+								<Popconfirm
+									okText="Có"
+									cancelText="Không"
+									placement="topRight"
+									title="Bạn có chắc là muốn xóa các nhân viên đã chọn?"
+									onConfirm={async () =>
+										await handleDeleteStaff(selectedRowKeys)
+									}
+								>
+									<Button
+										danger
+										type="primary"
+										shape="circle"
+										icon={<DeleteOutlined />}
+									/>
+								</Popconfirm>
+							</Tooltip>
 						</Space>
 					),
 					dataIndex: 'action',
 					render: (value, record) => (
 						<Space wrap align="center" size="small">
-							<Button
-								ghost
-								type="primary"
-								shape="circle"
-								icon={<EditOutlined />}
-								onClick={() => handleUpdateStaff(record)}
-							/>
-							<Button
-								ghost
-								danger
-								type="primary"
-								shape="circle"
-								icon={<DeleteOutlined />}
-								onClick={() => handleDeleteStaff([record.id])}
-							/>
+							<Tooltip placement="top" title="Chỉnh sửa nhân viên">
+								<Button
+									ghost
+									type="primary"
+									shape="circle"
+									icon={<EditOutlined />}
+									onClick={() => handleUpdateStaff(record)}
+								/>
+							</Tooltip>
+
+							<Tooltip placement="top" title="Xóa nhân viên">
+								<Popconfirm
+									okText="Có"
+									cancelText="Không"
+									placement="topRight"
+									title="Bạn có chắc là muốn xóa nhân viên này không?"
+									onConfirm={async () => await handleDeleteStaff([record.id])}
+								>
+									<Button
+										ghost
+										danger
+										type="primary"
+										shape="circle"
+										icon={<DeleteOutlined />}
+									/>
+								</Popconfirm>
+							</Tooltip>
 						</Space>
 					),
 				},

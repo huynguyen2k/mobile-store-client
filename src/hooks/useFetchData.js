@@ -1,10 +1,17 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 function useFetchData(callback) {
 	const [loading, setLoading] = useState(false)
 	const [data, setData] = useState([])
+	const [fetchStatus, setFetchStatus] = useState(true)
+
+	const refetchData = useCallback(() => {
+		setFetchStatus(true)
+	}, [])
 
 	useEffect(() => {
+		if (!fetchStatus) return
+
 		setLoading(true)
 		let isMounted = true
 
@@ -15,16 +22,19 @@ function useFetchData(callback) {
 			} catch (error) {
 				console.log(error)
 			} finally {
-				isMounted && setLoading(false)
+				if (isMounted) {
+					setLoading(false)
+					setFetchStatus(false)
+				}
 			}
 		})()
 
 		return () => {
 			isMounted = false
 		}
-	}, [callback])
+	}, [callback, fetchStatus])
 
-	return { loading, data }
+	return { loading, data, refetchData }
 }
 
 export default useFetchData
