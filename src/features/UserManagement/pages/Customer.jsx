@@ -1,7 +1,43 @@
-import React from 'react'
+import userApi from 'api/userApi'
+import useFetchData from 'hooks/useFetchData'
+import React, { useMemo } from 'react'
+import Swal from 'sweetalert2'
+import sleep from 'utils/sleep'
+import CustomerTable from '../components/CustomerTable'
 
 function CustomerPage() {
-	return <div>This is customer page</div>
+	const { loading, data, refetchData } = useFetchData(userApi.getAllCustomer)
+
+	const customerList = useMemo(() => {
+		return data.map(item => ({ ...item, key: item.id }))
+	}, [data])
+
+	const handleDeleteCustomer = async idList => {
+		try {
+			await sleep(1000)
+			await Promise.all(idList.map(id => userApi.delete(id)))
+			await Swal.fire({
+				title: 'Thông báo!',
+				text: 'Bạn đã xóa thành công!',
+				icon: 'success',
+				confirmButtonText: 'Xác nhận',
+				confirmButtonColor: 'var(--success)',
+			})
+			refetchData()
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+	return (
+		<>
+			<CustomerTable
+				loading={loading}
+				data={customerList}
+				onDeleteCustomer={handleDeleteCustomer}
+			/>
+		</>
+	)
 }
 
 export default CustomerPage
