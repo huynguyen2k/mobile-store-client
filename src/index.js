@@ -1,12 +1,17 @@
+import { notification } from 'antd'
+import 'antd/dist/antd.css'
+import store from 'app/store'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './App'
-import reportWebVitals from './reportWebVitals'
 import { Provider } from 'react-redux'
-import store from 'app/store'
 import { BrowserRouter as Router } from 'react-router-dom'
-import 'antd/dist/antd.css'
+import App from './App'
 import './index.scss'
+import reportWebVitals from './reportWebVitals'
+
+notification.config({
+	maxCount: 3,
+})
 
 ReactDOM.render(
 	<Provider store={store}>

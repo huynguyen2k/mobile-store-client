@@ -193,7 +193,7 @@ function CustomerTable({ loading, data, onDeleteCustomer }) {
 				},
 				{
 					title: () => (
-						<Tooltip placement="topRight" title="Xóa khách hàng đã chọn">
+						<Tooltip placement="top" title="Xóa khách hàng đã chọn">
 							<Popconfirm
 								okText="Có"
 								cancelText="Không"

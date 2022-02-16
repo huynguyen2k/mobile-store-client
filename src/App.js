@@ -1,6 +1,7 @@
 import NotFound from 'components/NotFound'
 import LoginPage from 'features/Auth/pages/Login'
 import RegisterPage from 'features/Auth/pages/Register'
+import BrandPage from 'features/ProductManagement/pages/Brand'
 import CustomerPage from 'features/UserManagement/pages/Customer'
 import StaffPage from 'features/UserManagement/pages/Staff'
 import AdminLayout from 'layout/Admin'
@@ -20,6 +21,10 @@ function App() {
 					<Route path="user" element={<Outlet />}>
 						<Route path="staff" element={<StaffPage />} />
 						<Route path="customer" element={<CustomerPage />} />
+					</Route>
+
+					<Route path="product" element={<Outlet />}>
+						<Route path="brand" element={<BrandPage />} />
 					</Route>
 				</Route>
 
