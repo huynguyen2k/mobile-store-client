@@ -1,55 +1,43 @@
-import { Modal, notification } from 'antd'
-import brandApi from 'api/brandApi'
+import { Modal } from 'antd'
+import romOptionApi from 'api/romOptionApi'
 import useFetchData from 'hooks/useFetchData'
 import React, { useMemo, useState } from 'react'
 import Swal from 'sweetalert2'
 import sleep from 'utils/sleep'
-import AddBrandForm from '../components/AddBrandForm'
-import BrandTable from '../components/BrandTable'
-import UpdateBrandForm from '../components/UpdateBrandForm'
+import OptionTable from '../components/OptionTable'
+import AddOptionForm from '../components/AddOptionForm'
+import UpdateOptionForm from '../components/UpdateOptionForm'
 
 const contentMode = {
-	addBrandForm: 'addBrandForm',
-	updateBrandForm: 'updateBrandForm',
+	addForm: 'addForm',
+	updateForm: 'updateForm',
 }
 
-function BrandPage() {
-	const [brandData, setBrandData] = useState(null)
+function RomOptionPage() {
+	const [optionData, setOptionData] = useState(null)
 	const [modalContent, setModalContent] = useState(null)
 	const [isModalVisible, setIsModalVisible] = useState(false)
 
-	const { loading, data, refetchData } = useFetchData(brandApi.getAll)
-	const brandList = useMemo(() => {
+	const { loading, data, refetchData } = useFetchData(romOptionApi.getAll)
+	const optionList = useMemo(() => {
 		return data.map(item => ({ ...item, key: item.id }))
 	}, [data])
 
-	const handleChangePublicStatus = async data => {
-		try {
-			const response = await brandApi.update(data)
-			notification.success({
-				message: response.message,
-			})
-			refetchData()
-		} catch (error) {
-			console.log(error)
-		}
-	}
-
-	const handleAddBrand = () => {
-		setModalContent(contentMode.addBrandForm)
+	const handleAddOption = () => {
+		setModalContent(contentMode.addForm)
 		setIsModalVisible(true)
 	}
 
-	const handleUpdateBrand = data => {
-		setBrandData(data)
-		setModalContent(contentMode.updateBrandForm)
+	const handleUpdateOption = data => {
+		setOptionData(data)
+		setModalContent(contentMode.updateForm)
 		setIsModalVisible(true)
 	}
 
-	const handleDeleteBrand = async idList => {
+	const handleDeleteOption = async idList => {
 		try {
 			await sleep(1000)
-			await Promise.all(idList.map(id => brandApi.delete(id)))
+			await Promise.all(idList.map(id => romOptionApi.delete(id)))
 			await Swal.fire({
 				title: 'Thông báo!',
 				text: 'Bạn đã xóa thành công!',
@@ -69,10 +57,10 @@ function BrandPage() {
 		}
 	}
 
-	const handleAddBrandSubmit = async data => {
+	const handleAddOptionSubmit = async data => {
 		try {
 			await sleep(1000)
-			const response = await brandApi.add(data)
+			const response = await romOptionApi.add(data)
 			await Swal.fire({
 				title: 'Thông báo!',
 				text: response.message,
@@ -94,10 +82,10 @@ function BrandPage() {
 		}
 	}
 
-	const handleUpdateBrandSubmit = async data => {
+	const handleUpdateOptionSubmit = async data => {
 		try {
 			await sleep(1000)
-			const response = await brandApi.update(data)
+			const response = await romOptionApi.update(data)
 			await Swal.fire({
 				title: 'Thông báo!',
 				text: response.message,
@@ -128,28 +116,28 @@ function BrandPage() {
 				onCancel={() => setIsModalVisible(false)}
 				footer={null}
 			>
-				{modalContent === contentMode.addBrandForm && (
-					<AddBrandForm onSubmit={handleAddBrandSubmit} />
+				{modalContent === contentMode.addForm && (
+					<AddOptionForm onSubmit={handleAddOptionSubmit} />
 				)}
 
-				{modalContent === contentMode.updateBrandForm && (
-					<UpdateBrandForm
-						data={brandData}
-						onSubmit={handleUpdateBrandSubmit}
+				{modalContent === contentMode.updateForm && (
+					<UpdateOptionForm
+						data={optionData}
+						onSubmit={handleUpdateOptionSubmit}
 					/>
 				)}
 			</Modal>
 
-			<BrandTable
+			<OptionTable
+				title="Cấu hình rom"
 				loading={loading}
-				data={brandList}
-				onAddBrand={handleAddBrand}
-				onUpdateBrand={handleUpdateBrand}
-				onDeleteBrand={handleDeleteBrand}
-				onChangePublicStatus={handleChangePublicStatus}
+				data={optionList}
+				onAddOption={handleAddOption}
+				onUpdateOption={handleUpdateOption}
+				onDeleteOption={handleDeleteOption}
 			/>
 		</>
 	)
 }
 
-export default BrandPage
+export default RomOptionPage

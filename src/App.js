@@ -1,6 +1,9 @@
 import NotFound from 'components/NotFound'
 import LoginPage from 'features/Auth/pages/Login'
 import RegisterPage from 'features/Auth/pages/Register'
+import ColorOptionPage from 'features/ProductConfiguration/pages/ColorOption'
+import RamOptionPage from 'features/ProductConfiguration/pages/RamOption'
+import RomOptionPage from 'features/ProductConfiguration/pages/RomOption'
 import BrandPage from 'features/ProductManagement/pages/Brand'
 import CustomerPage from 'features/UserManagement/pages/Customer'
 import StaffPage from 'features/UserManagement/pages/Staff'
@@ -25,6 +28,12 @@ function App() {
 
 					<Route path="product" element={<Outlet />}>
 						<Route path="brand" element={<BrandPage />} />
+					</Route>
+
+					<Route path="product-configuration" element={<Outlet />}>
+						<Route path="ram" element={<RamOptionPage />} />
+						<Route path="rom" element={<RomOptionPage />} />
+						<Route path="color" element={<ColorOptionPage />} />
 					</Route>
 				</Route>
 
