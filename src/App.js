@@ -7,6 +7,7 @@ import RomOptionPage from 'features/ProductConfiguration/pages/RomOption'
 import BrandPage from 'features/ProductManagement/pages/Brand'
 import CustomerPage from 'features/UserManagement/pages/Customer'
 import StaffPage from 'features/UserManagement/pages/Staff'
+import BannerPage from 'features/BannerManagement/pages/Banner'
 import AdminLayout from 'layout/Admin'
 import AuthLayout from 'layout/Auth'
 import { Outlet, Route, Routes } from 'react-router-dom'
@@ -35,6 +36,8 @@ function App() {
 						<Route path="rom" element={<RomOptionPage />} />
 						<Route path="color" element={<ColorOptionPage />} />
 					</Route>
+
+					<Route path="banner" element={<BannerPage />} />
 				</Route>
 
 				<Route path="*" element={<NotFound />} />
