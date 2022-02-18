@@ -11,6 +11,7 @@ import BannerPage from 'features/BannerManagement/pages/Banner'
 import AdminLayout from 'layout/Admin'
 import AuthLayout from 'layout/Auth'
 import { Outlet, Route, Routes } from 'react-router-dom'
+import SupplierPage from 'features/SupplierManagement/pages/Supplier'
 
 function App() {
 	return (
@@ -38,6 +39,7 @@ function App() {
 					</Route>
 
 					<Route path="banner" element={<BannerPage />} />
+					<Route path="supplier" element={<SupplierPage />} />
 				</Route>
 
 				<Route path="*" element={<NotFound />} />
