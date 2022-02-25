@@ -9,6 +9,7 @@ SelectField.propTypes = {
 
 	label: PropTypes.string,
 	optionList: PropTypes.array,
+	mode: PropTypes.string,
 	disabled: PropTypes.bool,
 	placeholder: PropTypes.string,
 }
@@ -16,6 +17,7 @@ SelectField.propTypes = {
 SelectField.defaultProps = {
 	label: '',
 	optionList: [],
+	mode: undefined,
 	disabled: false,
 	placeholder: '',
 }
@@ -31,6 +33,7 @@ function SelectField(props) {
 		<Form.Item
 			name={name}
 			label={label}
+			preserve={false}
 			initialValue={field.value}
 			help={fieldState.error?.message}
 			validateStatus={fieldState.invalid ? 'error' : ''}

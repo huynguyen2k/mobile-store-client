@@ -1,0 +1,20 @@
+.shop-info {
+	width: 800px;
+	max-width: 100%;
+	margin: 0 auto;
+
+	&__button {
+		transition: none;
+
+		&.save-btn {
+			margin-right: 16px;
+			border-color: var(--success);
+			background-color: var(--success);
+
+			&:hover {
+				border-color: var(--teal);
+				background-color: var(--teal);
+			}
+		}
+	}
+}

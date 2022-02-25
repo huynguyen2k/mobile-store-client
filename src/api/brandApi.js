@@ -1,8 +1,11 @@
 import axiosClient from './axiosClient'
 
 const brandApi = {
-	getAll() {
-		const url = '/api/brands'
+	getAll(published) {
+		let url = '/api/brands'
+		if (published !== undefined) {
+			url = `/api/brands?published=${published}`
+		}
 		return axiosClient.get(url)
 	},
 	get(id) {

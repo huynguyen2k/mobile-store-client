@@ -12,6 +12,8 @@ import AdminLayout from 'layout/Admin'
 import AuthLayout from 'layout/Auth'
 import { Outlet, Route, Routes } from 'react-router-dom'
 import SupplierPage from 'features/SupplierManagement/pages/Supplier'
+import ShopInfoPage from 'features/ShopManagement/pages/ShopInfo'
+import AddProductPage from 'features/ProductManagement/pages/AddProduct'
 
 function App() {
 	return (
@@ -30,6 +32,7 @@ function App() {
 
 					<Route path="product" element={<Outlet />}>
 						<Route path="brand" element={<BrandPage />} />
+						<Route path="add-product" element={<AddProductPage />} />
 					</Route>
 
 					<Route path="product-configuration" element={<Outlet />}>
@@ -40,8 +43,8 @@ function App() {
 
 					<Route path="banner" element={<BannerPage />} />
 					<Route path="supplier" element={<SupplierPage />} />
+					<Route path="shop-info" element={<ShopInfoPage />} />
 				</Route>
-
 				<Route path="*" element={<NotFound />} />
 			</Routes>
 		</div>

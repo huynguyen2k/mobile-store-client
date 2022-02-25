@@ -63,6 +63,10 @@ const AdminMenu = [
 				link: '/admin/product/brand',
 			},
 			{
+				title: 'Thêm sản phẩm mới',
+				link: '/admin/product/add-product',
+			},
+			{
 				title: 'Danh sách sản phẩm',
 				link: '/admin/product/product-list',
 			},
