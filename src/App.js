@@ -14,6 +14,8 @@ import { Outlet, Route, Routes } from 'react-router-dom'
 import SupplierPage from 'features/SupplierManagement/pages/Supplier'
 import ShopInfoPage from 'features/ShopManagement/pages/ShopInfo'
 import AddProductPage from 'features/ProductManagement/pages/AddProduct'
+import ProductListPage from 'features/ProductManagement/pages/ProductList'
+import OptionListPage from 'features/ProductManagement/pages/OptionDetail'
 
 function App() {
 	return (
@@ -33,6 +35,11 @@ function App() {
 					<Route path="product" element={<Outlet />}>
 						<Route path="brand" element={<BrandPage />} />
 						<Route path="add-product" element={<AddProductPage />} />
+						<Route path="product-list" element={<ProductListPage />} />
+						<Route
+							path="option-detail/:productId"
+							element={<OptionListPage />}
+						/>
 					</Route>
 
 					<Route path="product-configuration" element={<Outlet />}>

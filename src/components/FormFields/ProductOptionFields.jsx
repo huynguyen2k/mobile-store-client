@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { useFieldArray } from 'react-hook-form'
+import { useFieldArray, useWatch } from 'react-hook-form'
 import NumberField from './NumberField'
 import SelectField from './SelectField'
 import { Button, Col, Form, Row, Divider } from 'antd'
@@ -39,14 +39,47 @@ function ProductOptionFields(props) {
 		shouldUnregister: true,
 	})
 
+	const watchFieldArray = useWatch({
+		control: form.control,
+		name: name,
+	})
+
+	const controlledFields = fields.map((field, index) => {
+		return {
+			...field,
+			...watchFieldArray[index],
+		}
+	})
+
 	useEffect(() => {
 		if (fields.length > 0) return
 		append(fieldValues, { shouldFocus: false })
 	}, [append, fields])
 
+	const getColorOptionList = fieldIndex => {
+		if (!Array.isArray(controlledFields) || !Array.isArray(colorOptionList)) {
+			return []
+		}
+
+		const selectedField = controlledFields[fieldIndex]
+		const selectedColors = controlledFields
+			.filter((field, index) => {
+				return (
+					index !== fieldIndex &&
+					selectedField.ram_id === field.ram_id &&
+					selectedField.rom_id === field.rom_id
+				)
+			})
+			.flatMap(field => field.color_id_list)
+
+		return colorOptionList.filter(
+			color => !selectedColors.includes(color.value)
+		)
+	}
+
 	return (
 		<>
-			{fields.map((item, index) => (
+			{controlledFields.map((item, index) => (
 				<div key={item.id}>
 					<Divider style={{ marginTop: 0 }} />
 					<Form.Item style={{ marginBottom: 0 }} label={label} preserve={false}>
@@ -75,7 +108,7 @@ function ProductOptionFields(props) {
 									name={`${name}.${index}.color_id_list`}
 									placeholder="Chọn màu sắc của sản phẩm"
 									mode="multiple"
-									optionList={colorOptionList}
+									optionList={getColorOptionList(index)}
 								/>
 							</Col>
 
@@ -125,7 +158,7 @@ function ProductOptionFields(props) {
 							danger
 							type="dashed"
 							htmlType="button"
-							onClick={() => remove(fields.length - 1)}
+							onClick={() => remove(controlledFields.length - 1)}
 						>
 							Xóa cấu hình
 						</Button>
