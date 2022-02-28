@@ -1,0 +1,39 @@
+.quantity {
+	display: inline-flex;
+	align-items: center;
+	text-align: center;
+	border: 1px solid #ccc;
+	border-radius: 2px;
+
+	.btn {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 30px;
+		height: 30px;
+
+		cursor: pointer;
+		user-select: none;
+
+		&.disabled {
+			cursor: default;
+			pointer-events: none;
+		}
+	}
+
+	.minus-btn {
+		border-right: 1px solid #ccc;
+	}
+
+	.plus-btn {
+		border-left: 1px solid #ccc;
+	}
+
+	.value {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 36px;
+		height: 30px;
+	}
+}

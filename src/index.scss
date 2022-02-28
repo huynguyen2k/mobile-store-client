@@ -13,7 +13,7 @@
 	--gray: #6c757d;
 	--gray-dark: #343a40;
 	--primary: #1890ff;
-	--secondary: #9932e7;
+	--secondary: #ff424e;
 	--success: #05b171;
 	--info: #25c2e3;
 	--warning: #faae42;
@@ -39,9 +39,19 @@
 }
 
 img {
+	display: block;
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin: 0;
 }
 
 .ant-modal-content {

@@ -16,6 +16,7 @@ import ShopInfoPage from 'features/ShopManagement/pages/ShopInfo'
 import AddProductPage from 'features/ProductManagement/pages/AddProduct'
 import ProductListPage from 'features/ProductManagement/pages/ProductList'
 import OptionListPage from 'features/ProductManagement/pages/OptionDetail'
+import ProductDetailPage from 'features/ProductManagement/pages/ProductDetail'
 
 function App() {
 	return (
@@ -36,6 +37,10 @@ function App() {
 						<Route path="brand" element={<BrandPage />} />
 						<Route path="add-product" element={<AddProductPage />} />
 						<Route path="product-list" element={<ProductListPage />} />
+						<Route
+							path="product-detail/:productId"
+							element={<ProductDetailPage />}
+						/>
 						<Route
 							path="option-detail/:productId"
 							element={<OptionListPage />}

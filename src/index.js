@@ -8,6 +8,8 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import App from './App'
 import './index.scss'
 import reportWebVitals from './reportWebVitals'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
 
 notification.config({
 	maxCount: 3,
