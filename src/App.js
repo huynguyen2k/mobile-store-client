@@ -17,6 +17,7 @@ import AddProductPage from 'features/ProductManagement/pages/AddProduct'
 import ProductListPage from 'features/ProductManagement/pages/ProductList'
 import OptionListPage from 'features/ProductManagement/pages/OptionDetail'
 import ProductDetailPage from 'features/ProductManagement/pages/ProductDetail'
+import UpdateProductPage from 'features/ProductManagement/pages/UpdateProduct'
 
 function App() {
 	return (
@@ -36,6 +37,10 @@ function App() {
 					<Route path="product" element={<Outlet />}>
 						<Route path="brand" element={<BrandPage />} />
 						<Route path="add-product" element={<AddProductPage />} />
+						<Route
+							path="update-product/:productId"
+							element={<UpdateProductPage />}
+						/>
 						<Route path="product-list" element={<ProductListPage />} />
 						<Route
 							path="product-detail/:productId"

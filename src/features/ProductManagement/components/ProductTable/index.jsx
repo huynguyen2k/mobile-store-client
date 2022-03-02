@@ -30,15 +30,19 @@ import { Link } from 'react-router-dom'
 ProductTable.propTypes = {
 	loading: PropTypes.bool,
 	data: PropTypes.array,
+	onDeleteProduct: PropTypes.func,
+	onChangePublicStatus: PropTypes.func,
 }
 
 ProductTable.defaultProps = {
 	loading: false,
 	data: [],
+	onDeleteProduct: null,
+	onChangePublicStatus: null,
 }
 
 function ProductTable(props) {
-	const { loading, data } = props
+	const { loading, data, onChangePublicStatus, onDeleteProduct } = props
 	const [searchText, setSearchText] = useState('')
 	const [selectedRowKeys, setSelectedRowKeys] = useState([])
 
@@ -60,6 +64,18 @@ function ProductTable(props) {
 	const handleTableChange = (paginations, filters, sorter, extra) => {
 		if (extra.action === 'filter') {
 			setSelectedRowKeys([])
+		}
+	}
+
+	const handleChangePublicStatus = data => {
+		if (typeof onChangePublicStatus === 'function') {
+			onChangePublicStatus(data)
+		}
+	}
+
+	const handleDeleteProduct = async idList => {
+		if (typeof onDeleteProduct === 'function') {
+			await onDeleteProduct(idList)
 		}
 	}
 
@@ -224,12 +240,12 @@ function ProductTable(props) {
 							checked={!!value}
 							checkedChildren={<CheckOutlined />}
 							unCheckedChildren={<CloseOutlined />}
-							// onChange={checked =>
-							// 	handleChangePublicStatus({
-							// 		id: record.id,
-							// 		published: Number(checked),
-							// 	})
-							// }
+							onChange={checked =>
+								handleChangePublicStatus({
+									id: record.id,
+									published: Number(checked),
+								})
+							}
 						/>
 					),
 				},
@@ -256,9 +272,9 @@ function ProductTable(props) {
 									cancelText="Không"
 									placement="topRight"
 									title="Bạn có chắc là muốn xóa các sản phẩm đã chọn?"
-									// onConfirm={async () =>
-									//   await handleDeleteStaff(selectedRowKeys)
-									// }
+									onConfirm={async () =>
+										await handleDeleteProduct(selectedRowKeys)
+									}
 								>
 									<Button
 										danger
@@ -303,15 +319,16 @@ function ProductTable(props) {
 								/>
 							</Dropdown>
 
-							<Tooltip placement="top" title="Chỉnh sửa sản phẩm">
-								<Button
-									ghost
-									type="primary"
-									shape="circle"
-									icon={<EditOutlined />}
-									// onClick={() => handleUpdateStaff(record)}
-								/>
-							</Tooltip>
+							<Link to={`/admin/product/update-product/${record.id}`}>
+								<Tooltip placement="top" title="Chỉnh sửa sản phẩm">
+									<Button
+										ghost
+										type="primary"
+										shape="circle"
+										icon={<EditOutlined />}
+									/>
+								</Tooltip>
+							</Link>
 
 							<Tooltip placement="top" title="Xóa sản phẩm">
 								<Popconfirm
@@ -319,7 +336,7 @@ function ProductTable(props) {
 									cancelText="Không"
 									placement="topRight"
 									title="Bạn có chắc là muốn xóa sản phẩm này không?"
-									// onConfirm={async () => await handleDeleteStaff([record.id])}
+									onConfirm={async () => await handleDeleteProduct([record.id])}
 								>
 									<Button
 										ghost

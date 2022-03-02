@@ -1,33 +1,19 @@
 import React, { useMemo } from 'react'
-import './style.scss'
 import PropTypes from 'prop-types'
+import './style.scss'
 import * as yup from 'yup'
-import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import moment from 'moment'
-import { Button, Col, Form, Row, Typography } from 'antd'
-import InputField from 'components/FormFields/InputField'
-import SwitchField from 'components/FormFields/SwitchField'
-import { useSelector } from 'react-redux'
 import useFetchData from 'hooks/useFetchData'
 import brandApi from 'api/brandApi'
-import SelectField from 'components/FormFields/SelectField'
-import EditorField from 'components/FormFields/EditorField'
-import NumberField from 'components/FormFields/NumberField'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
 import productApi from 'api/productApi'
+import { Button, Col, Form, Row, Typography } from 'antd'
+import SelectField from 'components/FormFields/SelectField'
+import InputField from 'components/FormFields/InputField'
+import EditorField from 'components/FormFields/EditorField'
+import SwitchField from 'components/FormFields/SwitchField'
 import MultiUploadField from 'components/FormFields/MultiUploadField'
-import ProductOptionFields from 'components/FormFields/ProductOptionFields'
-import ramOptionApi from 'api/ramOptionApi'
-import romOptionApi from 'api/romOptionApi'
-import colorOptionApi from 'api/colorOptionApi'
-
-AddProductForm.propTypes = {
-	onSubmit: PropTypes.func,
-}
-
-AddProductForm.defaultProps = {
-	onSubmit: null,
-}
+import NumberField from 'components/FormFields/NumberField'
 
 const schema = yup
 	.object()
@@ -58,34 +44,20 @@ const schema = yup
 			.nullable()
 			.required('Bạn phải chọn thương hiệu cho sản phẩm!'),
 		images: yup.array().min(2, 'Bạn phải chọn tối thiểu 2 ảnh cho sản phẩm!'),
-		product_options: yup.array().of(
-			yup.object().shape({
-				ram_id: yup.number().nullable().required('Bạn phải chọn cấu hình ram!'),
-				rom_id: yup.number().nullable().required('Bạn phải chọn cấu hình rom!'),
-				color_id_list: yup
-					.array()
-					.min(1, 'Bạn phải chọn ít nhất 1 màu sắc cho sản phẩm!'),
-				original_price: yup
-					.number()
-					.nullable()
-					.required('Bạn phải nhập giá gốc cho sản phẩm!'),
-				sale_price: yup
-					.number()
-					.nullable()
-					.required('Bạn phải nhập giá khuyến mãi cho sản phẩm!')
-					.max(
-						yup.ref('original_price'),
-						'Giá khuyến mãi phải nhỏ hơn hoặc bằng giá gốc!'
-					),
-			})
-		),
 	})
 	.required()
 
-function AddProductForm({ onSubmit }) {
-	const user = useSelector(state => state.auth.user)
-	const [antdForm] = Form.useForm()
+UpdateProductForm.propTypes = {
+	data: PropTypes.object,
+	onSubmit: PropTypes.func,
+}
 
+UpdateProductForm.defaultProps = {
+	data: null,
+	onSubmit: null,
+}
+
+function UpdateProductForm({ data, onSubmit }) {
 	const { data: brandList } = useFetchData(() => brandApi.getAll(1))
 	const brandOptionList = useMemo(() => {
 		return brandList.map(item => ({
@@ -94,46 +66,26 @@ function AddProductForm({ onSubmit }) {
 		}))
 	}, [brandList])
 
-	const { data: ramList } = useFetchData(ramOptionApi.getAll)
-	const ramOptionList = useMemo(() => {
-		return ramList.map(item => ({
-			value: item.id,
-			label: item.name,
-		}))
-	}, [ramList])
-
-	const { data: romList } = useFetchData(romOptionApi.getAll)
-	const romOptionList = useMemo(() => {
-		return romList.map(item => ({
-			value: item.id,
-			label: item.name,
-		}))
-	}, [romList])
-
-	const { data: colorList } = useFetchData(colorOptionApi.getAll)
-	const colorOptionList = useMemo(() => {
-		return colorList.map(item => ({
-			value: item.id,
-			label: item.name,
-		}))
-	}, [colorList])
-
 	const form = useForm({
 		mode: 'onBlur',
 		reValidateMode: 'onBlur',
 		defaultValues: {
-			name: '',
-			specifications: '',
-			description: '',
-			width: null,
-			height: null,
-			weight: null,
-			length: null,
-			published: false,
-			brand_id: null,
-			user_id: user.id,
-			images: [],
-			product_options: [],
+			id: data?.id,
+			name: data?.name,
+			specifications: data?.specifications,
+			description: data?.description,
+			width: data?.width,
+			height: data?.height,
+			weight: data?.weight,
+			length: data?.length,
+			published: Boolean(data?.published),
+			brand_id: data?.brand_id,
+			images: data?.images.map(image => ({
+				uid: image.id,
+				name: image.image,
+				url: image.image,
+				status: 'done',
+			})),
 		},
 		resolver: yupResolver(schema),
 	})
@@ -143,38 +95,9 @@ function AddProductForm({ onSubmit }) {
 			...values,
 			published: Number(values.published),
 			images: values.images.map(image => image.url),
-			created_date: moment().format('YYYY-MM-DD HH:mm:ss'),
-			product_options: values.product_options.flatMap(option => {
-				const { color_id_list, ...data } = option
-				return color_id_list.map(color_id => ({ ...data, color_id }))
-			}),
 		}
-
 		if (onSubmit) {
 			await onSubmit(newValues)
-			form.reset({
-				name: '',
-				specifications: '',
-				description: '',
-				width: null,
-				height: null,
-				weight: null,
-				length: null,
-				published: false,
-				brand_id: null,
-				user_id: user.id,
-				images: [],
-				product_options: [],
-			})
-			antdForm.setFieldsValue({
-				name: '',
-				width: null,
-				height: null,
-				weight: null,
-				length: null,
-				published: false,
-				brand_id: null,
-			})
 		}
 	}
 
@@ -195,12 +118,12 @@ function AddProductForm({ onSubmit }) {
 	}
 
 	return (
-		<div className="add-product-form">
+		<div className="update-product-form">
 			<Typography.Title
 				level={4}
 				style={{ textAlign: 'center', marginBottom: 24 }}
 			>
-				Thêm sản phẩm mới
+				Cập nhật sản phẩm
 			</Typography.Title>
 
 			<Form
@@ -213,7 +136,6 @@ function AddProductForm({ onSubmit }) {
 				}}
 				size="large"
 				autoComplete="off"
-				form={antdForm}
 				onSubmitCapture={form.handleSubmit(handleSubmit)}
 			>
 				<SelectField
@@ -299,15 +221,6 @@ function AddProductForm({ onSubmit }) {
 					</Row>
 				</Form.Item>
 
-				<ProductOptionFields
-					name="product_options"
-					form={form}
-					label="Cấu hình sản phẩm"
-					ramOptionList={ramOptionList}
-					romOptionList={romOptionList}
-					colorOptionList={colorOptionList}
-				/>
-
 				<Form.Item
 					wrapperCol={{
 						offset: 4,
@@ -320,7 +233,7 @@ function AddProductForm({ onSubmit }) {
 						htmlType="submit"
 						loading={form.formState.isSubmitting}
 					>
-						Thêm sản phẩm
+						Cập nhật
 					</Button>
 				</Form.Item>
 			</Form>
@@ -328,4 +241,4 @@ function AddProductForm({ onSubmit }) {
 	)
 }
 
-export default AddProductForm
+export default UpdateProductForm
