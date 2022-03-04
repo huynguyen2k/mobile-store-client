@@ -1,0 +1,101 @@
+.header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 9999;
+	color: black;
+	background-color: white;
+
+	&__container {
+		height: 64px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	&__logo {
+		display: inline-block;
+		color: var(--primary);
+		font-size: 1.5rem;
+		font-weight: 500;
+
+		&:hover {
+			color: var(--primary);
+		}
+	}
+
+	&__menu {
+		display: flex;
+		align-items: center;
+
+		li {
+			a {
+				display: inline-block;
+				padding: 8px 16px;
+				color: black;
+				font-size: 1rem;
+				font-weight: 400;
+
+				&:hover {
+					color: var(--primary);
+				}
+				&.active {
+					color: var(--primary);
+				}
+			}
+		}
+	}
+
+	&__right {
+		display: flex;
+		align-items: flex-end;
+	}
+
+	&__account {
+		display: flex;
+		align-items: center;
+		cursor: pointer;
+		user-select: none;
+
+		.icon {
+			width: 32px;
+			height: 32px;
+		}
+
+		.info {
+			margin-left: 8px;
+			line-height: 1;
+
+			.title {
+				font-size: 0.75rem;
+				font-weight: 400;
+			}
+			.username {
+				margin-top: 2px;
+				font-size: 1rem;
+				font-weight: 400;
+			}
+		}
+	}
+
+	&__cart {
+		margin-left: 16px;
+		display: flex;
+		align-items: flex-end;
+		line-height: 1;
+
+		cursor: pointer;
+		user-select: none;
+
+		.icon {
+			width: 32px;
+			height: 32px;
+		}
+		.title {
+			margin-left: 4px;
+			font-size: 0.875rem;
+			font-weight: 400;
+		}
+	}
+}

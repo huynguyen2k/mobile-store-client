@@ -1,8 +1,10 @@
 import axiosClient from './axiosClient'
 
 const bannerApi = {
-	getAll() {
-		const url = '/api/banners'
+	getAll(published) {
+		const url = `/api/banners${
+			published === undefined ? '' : `?published=${published}`
+		}`
 		return axiosClient.get(url)
 	},
 	add(data) {

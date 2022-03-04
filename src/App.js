@@ -18,6 +18,11 @@ import ProductListPage from 'features/ProductManagement/pages/ProductList'
 import OptionListPage from 'features/ProductManagement/pages/OptionDetail'
 import ProductDetailPage from 'features/ProductManagement/pages/ProductDetail'
 import UpdateProductPage from 'features/ProductManagement/pages/UpdateProduct'
+import AddReceiptPage from 'features/WarehouseManagement/pages/AddReceipt'
+import ReceiptListPage from 'features/WarehouseManagement/pages/ReceiptList'
+import ReceiptDetailPage from 'features/WarehouseManagement/pages/ReceiptDetail'
+import CustomerLayout from 'layout/Customer'
+import HomePage from 'features/Product/pages/Home'
 
 function App() {
 	return (
@@ -26,6 +31,10 @@ function App() {
 				<Route element={<AuthLayout />}>
 					<Route path="/login" element={<LoginPage />} />
 					<Route path="/register" element={<RegisterPage />} />
+				</Route>
+
+				<Route path="/" element={<CustomerLayout />}>
+					<Route index element={<HomePage />} />
 				</Route>
 
 				<Route path="/admin" element={<AdminLayout />}>
@@ -56,6 +65,15 @@ function App() {
 						<Route path="ram" element={<RamOptionPage />} />
 						<Route path="rom" element={<RomOptionPage />} />
 						<Route path="color" element={<ColorOptionPage />} />
+					</Route>
+
+					<Route path="warehouse" element={<Outlet />}>
+						<Route path="add-receipt" element={<AddReceiptPage />} />
+						<Route path="receipt-list" element={<ReceiptListPage />} />
+						<Route
+							path="receipt-detail/:receiptId"
+							element={<ReceiptDetailPage />}
+						/>
 					</Route>
 
 					<Route path="banner" element={<BannerPage />} />

@@ -73,6 +73,26 @@ const AdminMenu = [
 		],
 	},
 	{
+		key: 'sub-menu-4',
+		icon: <HomeOutlined />,
+		title: 'Kho hàng',
+		subMenu: [
+			{
+				title: 'Thêm phiếu nhập hàng',
+				link: '/admin/warehouse/add-receipt',
+			},
+			{
+				title: 'Danh sách phiếu nhập hàng',
+				link: '/admin/warehouse/receipt-list',
+			},
+		],
+	},
+	{
+		icon: <InboxOutlined />,
+		title: 'Nhà cung cấp',
+		link: '/admin/supplier',
+	},
+	{
 		icon: <ShoppingOutlined />,
 		title: 'Đơn hàng',
 		link: '/admin/order',
@@ -97,16 +117,7 @@ const AdminMenu = [
 		title: 'Đánh giá',
 		link: '/admin/rating',
 	},
-	{
-		icon: <InboxOutlined />,
-		title: 'Nhà cung cấp',
-		link: '/admin/supplier',
-	},
-	{
-		icon: <HomeOutlined />,
-		title: 'Kho hàng',
-		link: '/admin/warehouse',
-	},
+
 	{
 		icon: <ShopOutlined />,
 		title: 'Thông tin cửa hàng',

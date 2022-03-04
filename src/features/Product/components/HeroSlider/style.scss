@@ -1,0 +1,32 @@
+.hero-slider {
+	width: calc(100vw - 12px);
+	height: calc(100vh - 64px);
+
+	&__btn {
+		position: absolute;
+		top: 50%;
+		z-index: 1000;
+		transform: translate(0, -50%);
+
+		border-radius: 4px;
+		padding: 8px;
+		font-size: 1.5rem;
+
+		color: white;
+		background-color: rgba($color: #000000, $alpha: 0.6);
+		cursor: pointer;
+		user-select: none;
+	}
+
+	&__prev-btn {
+		left: 16px;
+	}
+
+	&__next-btn {
+		right: 16px;
+	}
+
+	&__slide {
+		height: calc(100vh - 64px);
+	}
+}
