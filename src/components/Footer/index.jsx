@@ -52,22 +52,22 @@ function Footer() {
 						</div>
 
 						<div className="footer__col">
-							<h3 className="footer__title">Thương hiệu điện thoại</h3>
+							<h3 className="footer__title">Dịch vụ cửa hàng</h3>
 							<ul className="footer__link-list">
 								<li>
-									<Link to="/">Samsung</Link>
+									<Link to="/">Tìm hiểu về mua trả góp</Link>
 								</li>
 								<li>
-									<Link to="/">Apple</Link>
+									<Link to="/">Chính sách bảo hành</Link>
 								</li>
 								<li>
-									<Link to="/">Vivo</Link>
+									<Link to="/">Lịch sử mua hàng</Link>
 								</li>
 								<li>
-									<Link to="/">OPPO</Link>
+									<Link to="/">Giao hàng và thanh toán</Link>
 								</li>
 								<li>
-									<Link to="/">Xiaomi</Link>
+									<Link to="/">Hướng dẫn mua hàng</Link>
 								</li>
 							</ul>
 						</div>

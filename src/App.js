@@ -23,6 +23,7 @@ import ReceiptListPage from 'features/WarehouseManagement/pages/ReceiptList'
 import ReceiptDetailPage from 'features/WarehouseManagement/pages/ReceiptDetail'
 import CustomerLayout from 'layout/Customer'
 import HomePage from 'features/Product/pages/Home'
+import DetailPage from 'features/Product/pages/ProductDetail'
 
 function App() {
 	return (
@@ -35,6 +36,7 @@ function App() {
 
 				<Route path="/" element={<CustomerLayout />}>
 					<Route index element={<HomePage />} />
+					<Route path="product-detail/:productId" element={<DetailPage />} />
 				</Route>
 
 				<Route path="/admin" element={<AdminLayout />}>

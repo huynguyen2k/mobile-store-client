@@ -1,0 +1,15 @@
+.skeleton-card {
+	padding: 24px 20px;
+	background-color: white;
+	cursor: pointer;
+	user-select: none;
+
+	&:hover {
+		box-shadow: 0 0 16px 0 #ccc;
+	}
+
+	&__image {
+		width: 100% !important;
+		height: 300px !important;
+	}
+}

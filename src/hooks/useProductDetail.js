@@ -4,11 +4,15 @@ import { useCallback, useEffect, useState } from 'react'
 function useProductDetail(id) {
 	const [loading, setLoading] = useState(false)
 	const [data, setData] = useState(null)
-	const [fetchStatus, setFetchStatus] = useState(true)
+	const [fetchStatus, setFetchStatus] = useState(false)
 
 	const refetchData = useCallback(() => {
 		setFetchStatus(true)
 	}, [])
+
+	useEffect(() => {
+		refetchData()
+	}, [id, refetchData])
 
 	useEffect(() => {
 		if (!fetchStatus) return
