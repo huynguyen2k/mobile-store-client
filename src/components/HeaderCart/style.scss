@@ -1,0 +1,19 @@
+.header-cart {
+	margin-left: 16px;
+	display: flex;
+	align-items: flex-end;
+	line-height: 1;
+
+	cursor: pointer;
+	user-select: none;
+
+	.icon {
+		width: 32px;
+		height: 32px;
+	}
+	.title {
+		margin-left: 4px;
+		font-size: 0.875rem;
+		font-weight: 400;
+	}
+}

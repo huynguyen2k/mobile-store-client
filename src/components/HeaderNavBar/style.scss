@@ -1,0 +1,21 @@
+.header-nav-bar {
+	display: flex;
+	align-items: center;
+
+	li {
+		a {
+			display: inline-block;
+			padding: 8px 16px;
+			color: black;
+			font-size: 1rem;
+			font-weight: 400;
+
+			&:hover {
+				color: var(--primary);
+			}
+			&.active {
+				color: var(--primary);
+			}
+		}
+	}
+}

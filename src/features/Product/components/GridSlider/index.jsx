@@ -56,6 +56,7 @@ const settings = {
 }
 
 function GridSlider({ title, data, limit }) {
+	if (data.length === 0) return null
 	return (
 		<div className="grid-slider">
 			<h3 className="grid-slider__title">{title}</h3>

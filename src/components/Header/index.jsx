@@ -1,11 +1,24 @@
-import { ShoppingCartOutlined, UserOutlined } from '@ant-design/icons'
-import { Badge } from 'antd'
 import Container from 'components/Container'
+import HeaderAccount from 'components/HeaderAccount'
+import HeaderCart from 'components/HeaderCart'
+import HeaderNavBar from 'components/HeaderNavBar'
+import { logout } from 'features/Auth/authSlice'
 import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
 import './style.scss'
 
 function Header() {
+	const navigate = useNavigate()
+	const dispatch = useDispatch()
+	const user = useSelector(state => state.auth.user)
+	const loggedIn = useSelector(state => state.auth.loggedIn)
+
+	const handleLogout = () => {
+		dispatch(logout())
+		navigate('/', { replace: true })
+	}
+
 	return (
 		<header className="header">
 			<Container>
@@ -17,74 +30,16 @@ function Header() {
 					</div>
 
 					<div className="header__center">
-						<ul className="header__menu">
-							<li>
-								<NavLink
-									to="/"
-									className={({ isActive }) => (isActive ? 'active' : '')}
-								>
-									Trang chủ
-								</NavLink>
-							</li>
-							<li>
-								<NavLink
-									to="/product"
-									className={({ isActive }) => (isActive ? 'active' : '')}
-								>
-									Sản phẩm
-								</NavLink>
-							</li>
-							<li>
-								<NavLink
-									to="/brand"
-									className={({ isActive }) => (isActive ? 'active' : '')}
-								>
-									Thương hiệu
-								</NavLink>
-							</li>
-							<li>
-								<NavLink
-									to="/contact"
-									className={({ isActive }) => (isActive ? 'active' : '')}
-								>
-									Liên hệ
-								</NavLink>
-							</li>
-							<li>
-								<NavLink
-									to="/support"
-									className={({ isActive }) => (isActive ? 'active' : '')}
-								>
-									Hỗ trợ
-								</NavLink>
-							</li>
-						</ul>
+						<HeaderNavBar />
 					</div>
 
 					<div className="header__right">
-						<div className="header__account">
-							<img
-								src="/assets/images/user-icon.png"
-								alt="user icon"
-								className="icon"
-							/>
-
-							<div className="info">
-								<div className="title">Tài khoản</div>
-								<div className="username">Nguyễn Quốc Huy</div>
-							</div>
-						</div>
-
-						<div className="header__cart">
-							<Badge count={1000} size="small">
-								<img
-									src="/assets/images/shopping-cart-icon.png"
-									alt="cart icon"
-									className="icon"
-								/>
-							</Badge>
-							<span className="title">Giỏ hàng</span>
-						</div>
+						<HeaderAccount
+							loggedIn={loggedIn}
+							user={user}
+							onLogout={handleLogout}
+						/>
+						<HeaderCart />
 					</div>
 				</div>
 			</Container>

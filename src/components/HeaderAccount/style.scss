@@ -1,0 +1,46 @@
+.header-account {
+	display: flex;
+	align-items: center;
+	color: inherit;
+	cursor: pointer;
+	user-select: none;
+
+	&:hover {
+		color: inherit;
+	}
+
+	.icon {
+		width: 36px;
+		height: 36px;
+		border-radius: 50%;
+		overflow: hidden;
+	}
+
+	.info {
+		margin-left: 8px;
+		line-height: 1;
+
+		.title {
+			font-size: 0.75rem;
+			font-weight: 400;
+		}
+		.username {
+			margin-top: 2px;
+			font-size: 1rem;
+			font-weight: 400;
+		}
+	}
+}
+
+.drop-down {
+	width: 265px;
+	z-index: 10000;
+
+	&__list {
+		padding: 8px 0;
+
+		li {
+			padding: 8px 12px;
+		}
+	}
+}

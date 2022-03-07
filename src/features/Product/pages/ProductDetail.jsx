@@ -19,7 +19,7 @@ function ProductDetailPage() {
 			<Container>
 				<ProductDetail data={data} />
 				<GridSlider limit={10} title="Sản phẩm tương tự" data={productList} />
-				<GridSlider limit={6} title="Sản phẩm khác" data={productList} />
+				<GridSlider limit={10} title="Sản phẩm khác" data={productList} />
 				<ProductSpecification data={data} />
 				<ProductDescription data={data} />
 			</Container>

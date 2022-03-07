@@ -5,13 +5,15 @@ import LoginForm from 'features/Auth/components/LoginForm'
 import useLoading from 'hooks/useLoading'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import './style.scss'
 
 function LoginPage() {
 	const loading = useLoading()
 	const navigate = useNavigate()
+	const location = useLocation()
+
 	const dispatch = useDispatch()
 	const [isSubmitted, setIsSubmitted] = useState(false)
 	const loggedIn = useSelector(state => state.auth.loggedIn)
@@ -30,7 +32,9 @@ function LoginPage() {
 			if (user.role_name === UserRoles.WAREHOUSE_MANAGER.name) {
 				return navigate('/warehouse-manager', { replace: true })
 			}
-			return navigate(-1)
+
+			if (!location.state) return navigate('/', { replace: true })
+			return navigate(location.state.from.pathname, { replace: true })
 		} catch (error) {
 			Swal.fire({
 				title: 'Thông báo!',
