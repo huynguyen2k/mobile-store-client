@@ -25,6 +25,7 @@ import CustomerLayout from 'layout/Customer'
 import HomePage from 'features/Product/pages/Home'
 import DetailPage from 'features/Product/pages/ProductDetail'
 import CouponsPage from 'features/CouponsManagement/pages/Coupons'
+import NotificationPage from 'features/NotificationManagement/pages/Notification'
 
 function App() {
 	return (
@@ -82,8 +83,10 @@ function App() {
 					<Route path="supplier" element={<SupplierPage />} />
 					<Route path="banner" element={<BannerPage />} />
 					<Route path="coupons" element={<CouponsPage />} />
+					<Route path="notification" element={<NotificationPage />} />
 					<Route path="shop-info" element={<ShopInfoPage />} />
 				</Route>
+
 				<Route path="*" element={<NotFound />} />
 			</Routes>
 		</div>
