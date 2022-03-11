@@ -8,6 +8,14 @@ const notificationApi = {
 		}
 		return axiosClient.get(url)
 	},
+	getCustomerNotification(id) {
+		const url = `/api/notification/${id}`
+		return axiosClient.get(url)
+	},
+	markRead(data) {
+		const url = `/api/notification/mark-read`
+		return axiosClient.put(url, data)
+	},
 	add(data) {
 		const url = '/api/notification'
 		return axiosClient.post(url, data)

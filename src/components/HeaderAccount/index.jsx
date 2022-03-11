@@ -16,16 +16,18 @@ import { Link, useLocation } from 'react-router-dom'
 HeaderAccount.propTypes = {
 	loggedIn: PropTypes.bool,
 	user: PropTypes.object,
+	notification: PropTypes.object,
 	onLogout: PropTypes.func,
 }
 
 HeaderAccount.defaultProps = {
 	loggedIn: false,
 	user: null,
+	notification: null,
 	onLogout: () => {},
 }
 
-function HeaderAccount({ loggedIn, user, onLogout }) {
+function HeaderAccount({ loggedIn, user, notification, onLogout }) {
 	const location = useLocation()
 
 	return (
@@ -40,11 +42,21 @@ function HeaderAccount({ loggedIn, user, onLogout }) {
 							<Menu.Item key={1} icon={<UserOutlined />}>
 								<Link to="/customer/account">Thông tin tài khoản</Link>
 							</Menu.Item>
-							<Menu.Item key={2} icon={<ShoppingOutlined />}>
-								<Link to="/customer/order">Đơn hàng của tôi</Link>
+							<Menu.Item key={2} icon={<BellOutlined />}>
+								<Link to="/customer/notification">
+									<span>Thông báo của tôi</span>
+
+									{notification && notification.unreadNumber > 0 && (
+										<span className="notification-number">
+											{notification.unreadNumber <= 99
+												? notification.unreadNumber
+												: '99+'}
+										</span>
+									)}
+								</Link>
 							</Menu.Item>
-							<Menu.Item key={3} icon={<BellOutlined />}>
-								<Link to="/customer/notification">Thông báo của tôi</Link>
+							<Menu.Item key={3} icon={<ShoppingOutlined />}>
+								<Link to="/customer/order">Đơn hàng của tôi</Link>
 							</Menu.Item>
 							<Menu.Item key={4} icon={<FileTextOutlined />}>
 								<Link to="/customer/address">Địa chỉ thanh toán</Link>

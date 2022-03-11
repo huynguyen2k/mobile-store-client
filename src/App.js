@@ -26,6 +26,9 @@ import HomePage from 'features/Product/pages/Home'
 import DetailPage from 'features/Product/pages/ProductDetail'
 import CouponsPage from 'features/CouponsManagement/pages/Coupons'
 import NotificationPage from 'features/NotificationManagement/pages/Notification'
+import CustomerNotificationPage from 'features/CustomerAccount/pages/Notification'
+import Container from 'components/Container'
+import RequireAuth from 'components/RequireAuth'
 
 function App() {
 	return (
@@ -39,6 +42,19 @@ function App() {
 				<Route path="/" element={<CustomerLayout />}>
 					<Route index element={<HomePage />} />
 					<Route path="product-detail/:productId" element={<DetailPage />} />
+
+					<Route
+						path="customer"
+						element={
+							<RequireAuth>
+								<Container>
+									<Outlet />
+								</Container>
+							</RequireAuth>
+						}
+					>
+						<Route path="notification" element={<CustomerNotificationPage />} />
+					</Route>
 				</Route>
 
 				<Route path="/admin" element={<AdminLayout />}>

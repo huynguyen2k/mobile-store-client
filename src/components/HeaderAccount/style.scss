@@ -41,6 +41,23 @@
 
 		li {
 			padding: 8px 12px;
+
+			.notification-number {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+
+				margin-left: 8px;
+				border-radius: 50%;
+				width: 24px;
+				height: 24px;
+
+				color: white;
+				background-color: red;
+				font-size: 0.75rem;
+				line-height: 1;
+				font-weight: 400;
+			}
 		}
 	}
 }

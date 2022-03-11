@@ -1,0 +1,78 @@
+.notification-list {
+	width: 1000px;
+	max-width: 100%;
+
+	&__title {
+		margin-bottom: 8px;
+		font-size: 1.25rem;
+		font-weight: 400;
+		line-height: 1.4;
+	}
+
+	&__content {
+		background-color: white;
+	}
+
+	&__item {
+		display: flex;
+		align-items: center;
+		padding: 20px;
+		border-bottom: 1px solid var(--light);
+
+		&.active {
+			background-color: #f6fcff;
+		}
+
+		&:last-child {
+			border-bottom: none;
+		}
+
+		.content {
+			margin-left: 32px;
+			margin-right: 32px;
+			display: flex;
+			align-items: center;
+
+			.icon {
+				width: 40px;
+				height: 40px;
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+
+				color: white;
+				background-color: #02b7f1;
+				font-size: 1.875rem;
+			}
+
+			.text-content {
+				flex: 1 0 0;
+				margin-left: 16px;
+				line-height: 1.4;
+
+				.title {
+					font-size: 1rem;
+					font-weight: 400;
+				}
+				.message {
+					margin-top: 4px;
+					font-size: 0.875rem;
+					font-weight: 400;
+				}
+			}
+		}
+		.mark-read-btn {
+			align-self: flex-start;
+			display: inline-block;
+			margin-left: auto;
+
+			color: var(--primary);
+			font-weight: 400;
+			white-space: nowrap;
+
+			cursor: pointer;
+			user-select: none;
+		}
+	}
+}
