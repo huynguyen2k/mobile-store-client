@@ -1,0 +1,60 @@
+.address-list {
+	width: 1000px;
+	max-width: 100%;
+
+	&__title {
+		margin-bottom: 8px;
+		font-size: 1.25rem;
+		font-weight: 400;
+		line-height: 1.4;
+	}
+
+	&__add-btn {
+		height: 40px;
+		border-color: var(--success);
+
+		&:hover {
+			border-color: var(--success);
+			color: var(--success);
+		}
+		&:focus {
+			border-color: var(--success);
+			color: var(--success);
+		}
+	}
+
+	&__item {
+		margin-top: 16px;
+		padding: 16px;
+		display: flex;
+		justify-content: space-between;
+		background-color: white;
+	}
+
+	&__item-info {
+		font-size: 0.875rem;
+		font-weight: 400;
+		line-height: 1.5;
+
+		.name {
+			margin-bottom: 8px;
+			font-size: 1rem;
+			font-weight: 500;
+		}
+		.default-address {
+			margin-left: 16px;
+			font-size: 0.875rem;
+			color: var(--success);
+
+			.icon {
+				margin-right: 4px;
+			}
+		}
+		.address {
+			display: block;
+		}
+		.phone {
+			display: flex;
+		}
+	}
+}

@@ -59,7 +59,7 @@ function HeaderAccount({ loggedIn, user, notification, onLogout }) {
 								<Link to="/customer/order">Đơn hàng của tôi</Link>
 							</Menu.Item>
 							<Menu.Item key={4} icon={<FileTextOutlined />}>
-								<Link to="/customer/address">Địa chỉ thanh toán</Link>
+								<Link to="/customer/address">Địa chỉ giao hàng</Link>
 							</Menu.Item>
 							<Menu.Item key={5} icon={<HeartOutlined />}>
 								<Link to="/customer/favorite-product">Sản phẩm yêu thích</Link>

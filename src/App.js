@@ -29,6 +29,8 @@ import NotificationPage from 'features/NotificationManagement/pages/Notification
 import CustomerNotificationPage from 'features/CustomerAccount/pages/Notification'
 import Container from 'components/Container'
 import RequireAuth from 'components/RequireAuth'
+import AccountPage from 'features/CustomerAccount/pages/Account'
+import AddressPage from 'features/CustomerAccount/pages/Address'
 
 function App() {
 	return (
@@ -53,7 +55,9 @@ function App() {
 							</RequireAuth>
 						}
 					>
+						<Route path="account" element={<AccountPage />} />
 						<Route path="notification" element={<CustomerNotificationPage />} />
+						<Route path="address" element={<AddressPage />} />
 					</Route>
 				</Route>
 

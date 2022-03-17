@@ -21,6 +21,22 @@ export const login = createAsyncThunk(
 	}
 )
 
+export const update = createAsyncThunk(
+	'auth/update',
+	async (payload, thunkAPI) => {
+		try {
+			await sleep(1000)
+
+			const response = await userApi.update(payload)
+			localStorage.setItem('user', JSON.stringify(response.content))
+
+			return response.content
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error)
+		}
+	}
+)
+
 export const register = createAsyncThunk(
 	'auth/register',
 	async (payload, thunkAPI) => {
@@ -51,9 +67,13 @@ const authSlice = createSlice({
 		},
 	},
 	extraReducers: {
-		[login.fulfilled](state, action) {
+		[login.fulfilled]: (state, action) => {
 			state.user = action.payload
 			state.loggedIn = true
+		},
+
+		[update.fulfilled]: (state, action) => {
+			state.user = action.payload
 		},
 	},
 })

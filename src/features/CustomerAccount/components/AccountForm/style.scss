@@ -1,0 +1,16 @@
+.account-form {
+	width: 1000px;
+	max-width: 100%;
+
+	&__title {
+		margin-bottom: 8px;
+		font-size: 1.25rem;
+		font-weight: 400;
+		line-height: 1.4;
+	}
+
+	&__content {
+		padding: 32px;
+		background-color: white;
+	}
+}
