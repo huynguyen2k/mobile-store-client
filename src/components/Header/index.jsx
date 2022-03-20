@@ -3,6 +3,7 @@ import HeaderAccount from 'components/HeaderAccount'
 import HeaderCart from 'components/HeaderCart'
 import HeaderNavBar from 'components/HeaderNavBar'
 import { logout } from 'features/Auth/authSlice'
+import { getAllCartItems, resetCartItems } from 'features/Cart/cartSlice'
 import { getCustomerNotification } from 'features/CustomerAccount/customerSlice'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -16,6 +17,7 @@ function Header() {
 	const user = useSelector(state => state.auth.user)
 	const loggedIn = useSelector(state => state.auth.loggedIn)
 	const notification = useSelector(state => state.customer.notification)
+	const cartItems = useSelector(state => state.cart.cartItems)
 
 	useEffect(() => {
 		if (!user) return
@@ -28,8 +30,21 @@ function Header() {
 		})()
 	}, [dispatch, user])
 
+	useEffect(() => {
+		if (!user) return
+		;(async () => {
+			try {
+				await dispatch(getAllCartItems(user.id)).unwrap()
+			} catch (error) {
+				console.log(error)
+			}
+		})()
+	}, [dispatch, user])
+
 	const handleLogout = () => {
 		dispatch(logout())
+		dispatch(resetCartItems())
+
 		navigate('/', { replace: true })
 	}
 
@@ -54,7 +69,8 @@ function Header() {
 							notification={notification}
 							onLogout={handleLogout}
 						/>
-						<HeaderCart />
+
+						<HeaderCart quantity={cartItems.length} />
 					</div>
 				</div>
 			</Container>

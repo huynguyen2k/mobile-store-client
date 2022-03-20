@@ -7,13 +7,15 @@ import './style.scss'
 
 ProductDetail.propTypes = {
 	data: PropTypes.object,
+	onBuyProduct: PropTypes.func,
 }
 
 ProductDetail.defaultProps = {
 	data: null,
+	onBuyProduct: null,
 }
 
-function ProductDetail({ data }) {
+function ProductDetail({ data, onBuyProduct }) {
 	if (!data) return null
 	return (
 		<div className="product-detail">
@@ -32,7 +34,7 @@ function ProductDetail({ data }) {
 
 				<Col flex="auto">
 					<div className="product-detail__right-col">
-						<ProductInfo data={data} />
+						<ProductInfo data={data} onBuyProduct={onBuyProduct} />
 					</div>
 				</Col>
 			</Row>

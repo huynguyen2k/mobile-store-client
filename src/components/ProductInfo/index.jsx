@@ -6,16 +6,19 @@ import { useEffect } from 'react'
 import getPromotionPercent from 'utils/getPromotionPercent'
 import formatCurrency from 'utils/formatCurrency'
 import Quantity from 'components/Quantity'
+import Swal from 'sweetalert2'
 
 ProductInfo.propTypes = {
 	data: PropTypes.object,
+	onBuyProduct: PropTypes.func,
 }
 
 ProductInfo.defaultProps = {
 	data: null,
+	onBuyProduct: null,
 }
 
-function ProductInfo({ data }) {
+function ProductInfo({ data, onBuyProduct }) {
 	const [quantity, setQuantity] = useState(1)
 	const [selectedOption, setSelectedOption] = useState(null)
 
@@ -170,6 +173,42 @@ function ProductInfo({ data }) {
 		)
 	}
 
+	const handleBuyProduct = () => {
+		if (!selectedOption) return
+
+		const availableQuantity =
+			selectedOption.quantity - selectedOption.sold_quantity
+
+		if (availableQuantity === 0) {
+			Swal.fire({
+				title: 'Thông báo!',
+				text: 'Xin lỗi sản phẩm này hiện đã hết hàng!',
+				icon: 'info',
+				confirmButtonText: 'Xác nhận',
+				confirmButtonColor: 'var(--success)',
+			})
+			return
+		}
+
+		if (quantity > availableQuantity) {
+			Swal.fire({
+				title: 'Thông báo!',
+				text: `Xin lỗi hiện chỉ còn ${availableQuantity} sản phẩm!`,
+				icon: 'info',
+				confirmButtonText: 'Xác nhận',
+				confirmButtonColor: 'var(--success)',
+			})
+			return
+		}
+
+		if (onBuyProduct) {
+			onBuyProduct({
+				product_option_id: selectedOption.id,
+				quantity: quantity,
+			})
+		}
+	}
+
 	if (!data) return null
 	return (
 		<div className="product-info">
@@ -226,8 +265,27 @@ function ProductInfo({ data }) {
 					value={quantity}
 					onChange={value => setQuantity(value)}
 				/>
+				<span className="available-product">
+					{(() => {
+						const availableQuantity =
+							selectedOption?.quantity - selectedOption?.sold_quantity
+						if (availableQuantity === 0) {
+							return 'Hết hàng'
+						}
+						if (availableQuantity > 0) {
+							return `${availableQuantity} sản phẩm có sẵn`
+						}
+						return ''
+					})()}
+				</span>
 				<div className="buy-btn-wrap">
-					<Button danger size="large" type="primary" className="buy-btn">
+					<Button
+						danger
+						size="large"
+						type="primary"
+						className="buy-btn"
+						onClick={handleBuyProduct}
+					>
 						Chọn mua
 					</Button>
 				</div>

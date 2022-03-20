@@ -31,6 +31,7 @@ import Container from 'components/Container'
 import RequireAuth from 'components/RequireAuth'
 import AccountPage from 'features/CustomerAccount/pages/Account'
 import AddressPage from 'features/CustomerAccount/pages/Address'
+import CartPage from 'features/Cart/pages/cart'
 
 function App() {
 	return (
@@ -58,6 +59,7 @@ function App() {
 						<Route path="account" element={<AccountPage />} />
 						<Route path="notification" element={<CustomerNotificationPage />} />
 						<Route path="address" element={<AddressPage />} />
+						<Route path="cart" element={<CartPage />} />
 					</Route>
 				</Route>
 
