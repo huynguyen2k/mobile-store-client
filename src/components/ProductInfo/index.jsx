@@ -6,7 +6,6 @@ import { useEffect } from 'react'
 import getPromotionPercent from 'utils/getPromotionPercent'
 import formatCurrency from 'utils/formatCurrency'
 import Quantity from 'components/Quantity'
-import Swal from 'sweetalert2'
 
 ProductInfo.propTypes = {
 	data: PropTypes.object,
@@ -176,36 +175,8 @@ function ProductInfo({ data, onBuyProduct }) {
 	const handleBuyProduct = () => {
 		if (!selectedOption) return
 
-		const availableQuantity =
-			selectedOption.quantity - selectedOption.sold_quantity
-
-		if (availableQuantity === 0) {
-			Swal.fire({
-				title: 'Thông báo!',
-				text: 'Xin lỗi sản phẩm này hiện đã hết hàng!',
-				icon: 'info',
-				confirmButtonText: 'Xác nhận',
-				confirmButtonColor: 'var(--success)',
-			})
-			return
-		}
-
-		if (quantity > availableQuantity) {
-			Swal.fire({
-				title: 'Thông báo!',
-				text: `Xin lỗi hiện chỉ còn ${availableQuantity} sản phẩm!`,
-				icon: 'info',
-				confirmButtonText: 'Xác nhận',
-				confirmButtonColor: 'var(--success)',
-			})
-			return
-		}
-
 		if (onBuyProduct) {
-			onBuyProduct({
-				product_option_id: selectedOption.id,
-				quantity: quantity,
-			})
+			onBuyProduct(selectedOption, quantity)
 		}
 	}
 

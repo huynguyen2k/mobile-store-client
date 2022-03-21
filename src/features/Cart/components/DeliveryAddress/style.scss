@@ -1,0 +1,29 @@
+.delivery-address {
+	border-radius: 4px;
+	padding: 16px;
+	background-color: white;
+
+	&__header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		.title {
+			font-size: 1rem;
+		}
+	}
+
+	&__line-break {
+		margin: 12px 0;
+		border-top: 1px solid #ccc;
+	}
+
+	&__content {
+		.address {
+			display: block;
+		}
+		.phone-number {
+			display: block;
+		}
+	}
+}

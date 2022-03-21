@@ -1,0 +1,43 @@
+.order {
+	border-radius: 4px;
+	padding: 16px;
+	background-color: white;
+
+	&__header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		font-size: 1rem;
+	}
+
+	&__line-break {
+		margin: 12px 0;
+		border-top: 1px solid #ccc;
+	}
+
+	&__content {
+		.discount {
+			color: var(--success);
+		}
+
+		.total-price-label {
+			font-weight: 500;
+		}
+
+		.total-price-value {
+			font-size: 1.25rem;
+			font-weight: 500;
+			color: var(--secondary);
+		}
+
+		.row {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+
+			& + .row {
+				margin-top: 8px;
+			}
+		}
+	}
+}

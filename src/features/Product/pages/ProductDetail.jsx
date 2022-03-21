@@ -20,24 +20,53 @@ function ProductDetailPage() {
 
 	const dispatch = useDispatch()
 	const user = useSelector(state => state.auth.user)
+	const cartItems = useSelector(state => state.cart.cartItems)
 
 	const { data } = useProductDetail(productId)
 	const { data: productList } = useFetchData(productApi.getAll)
 
-	const handleBuyProduct = async data => {
+	const handleBuyProduct = async (option, quantity) => {
 		if (!user) {
 			navigate('/login', { state: { from: location } })
 			return
 		}
 
-		const newData = {
-			...data,
+		const availableQuantity = option.quantity - option.sold_quantity
+		if (availableQuantity === 0) {
+			return notification.info({
+				message: 'Xin lỗi sản phẩm này hiện đã hết hàng!',
+			})
+		}
+
+		let quantityInCart = 0
+		const index = cartItems.findIndex(e => e.product_option_id === option.id)
+
+		if (index >= 0) {
+			quantityInCart = cartItems[index].quantity
+		}
+		const totalQuantity = quantity + quantityInCart
+
+		if (totalQuantity > 5) {
+			return notification.info({
+				message: `Xin lỗi số lượng tối đa có thể mua của sản phẩm này là 5!`,
+			})
+		}
+
+		if (totalQuantity > availableQuantity) {
+			return notification.info({
+				message: `Xin lỗi hiện chỉ còn ${availableQuantity} sản phẩm!`,
+			})
+		}
+
+		const data = {
+			product_option_id: option.id,
+			quantity: quantity,
 			user_id: user.id,
 			created_date: moment().format('YYYY-MM-DD HH:mm:ss'),
 		}
 
 		try {
-			const response = await dispatch(addCartItem(newData)).unwrap()
+			const response = await dispatch(addCartItem(data)).unwrap()
 			notification.success({
 				message: response.message,
 			})

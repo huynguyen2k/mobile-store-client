@@ -76,6 +76,7 @@ function CartItem({ checked, data, onSelect, onUpdateQuantity, onDelete }) {
 				<div className="col-3">
 					<Quantity
 						min={1}
+						max={5}
 						value={data.quantity}
 						onChange={handleUpdateQuantity}
 					/>
