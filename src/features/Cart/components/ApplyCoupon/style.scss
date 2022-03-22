@@ -1,0 +1,53 @@
+.apply-coupon {
+	border-radius: 4px;
+	padding: 16px;
+	background-color: white;
+
+	&__title {
+		display: block;
+		margin-bottom: 4px;
+		font-size: 1rem;
+	}
+
+	&__form {
+		display: flex;
+		align-items: center;
+
+		.input {
+			outline: none;
+			border: 1px solid #ccc;
+			border-radius: 2px;
+			padding: 0 8px;
+
+			flex: 1 0 0;
+			height: 36px;
+
+			&:focus {
+				border-color: var(--primary);
+			}
+		}
+
+		.apply-btn {
+			margin-left: 8px;
+			outline: none;
+			border: none;
+			border-radius: 2px;
+			height: 36px;
+			padding: 0 16px;
+
+			color: white;
+			background-color: var(--primary);
+
+			pointer-events: none;
+			cursor: default;
+			opacity: 0.6;
+
+			&.active {
+				cursor: pointer;
+				opacity: 1;
+				user-select: none;
+				pointer-events: initial;
+			}
+		}
+	}
+}

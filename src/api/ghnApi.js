@@ -10,6 +10,7 @@ const ghnApi = {
 			},
 		})
 	},
+
 	getDistrict(provinceId) {
 		const url =
 			'https://online-gateway.ghn.vn/shiip/public-api/master-data/district'
@@ -25,6 +26,7 @@ const ghnApi = {
 			}
 		)
 	},
+
 	getWard(districtId) {
 		const url =
 			'https://online-gateway.ghn.vn/shiip/public-api/master-data/ward'
@@ -39,6 +41,27 @@ const ghnApi = {
 				},
 			}
 		)
+	},
+
+	getService(data) {
+		const url =
+			'https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/available-services'
+		return axiosClient.post(url, data, {
+			headers: {
+				token: process.env.REACT_APP_GHN_TOKEN,
+			},
+		})
+	},
+
+	getFee(data) {
+		const url =
+			'https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee'
+		return axiosClient.post(url, data, {
+			headers: {
+				token: process.env.REACT_APP_GHN_TOKEN,
+				shop_id: process.env.REACT_APP_GHN_SHOP_ID,
+			},
+		})
 	},
 }
 

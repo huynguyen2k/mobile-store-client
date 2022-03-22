@@ -1,8 +1,11 @@
 import { Col, notification, Row } from 'antd'
+import ghnApi from 'api/ghnApi'
 import { getAddressList } from 'features/CustomerAccount/customerSlice'
+import { getShopInfo } from 'features/ShopManagement/shopSlice'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteCartItem, updateCartItem } from '../cartSlice'
+import ApplyCoupon from '../components/ApplyCoupon'
 import CartList from '../components/CartList'
 import DeliveryAddress from '../components/DeliveryAddress'
 import Order from '../components/Order'
@@ -10,13 +13,15 @@ import Order from '../components/Order'
 function CartPage() {
 	const dispatch = useDispatch()
 
+	const [deliveryCost, setDeliveryCost] = useState(0)
+	const [selectedItems, setSelectedItems] = useState([])
+
 	const user = useSelector(state => state.auth.user)
+	const shopInfo = useSelector(state => state.shop.data)
 	const cartItems = useSelector(state => state.cart.cartItems)
 	const addressList = useSelector(state => state.customer.addressList)
 
-	const [selectedItems, setSelectedItems] = useState([])
-
-	const deliveryAddress = useMemo(() => {
+	const customerAddress = useMemo(() => {
 		const index = addressList.findIndex(e => e.is_default === 1)
 		if (index >= 0) {
 			return { ...addressList[index] }
@@ -42,7 +47,6 @@ function CartPage() {
 			return result
 		}, 0)
 
-		const deliveryCost = 0
 		const discount = 0
 
 		return {
@@ -52,7 +56,7 @@ function CartPage() {
 			discount: discount,
 			final_price: totalPrice + deliveryCost - discount,
 		}
-	}, [cartItems, selectedItems])
+	}, [cartItems, selectedItems, deliveryCost])
 
 	useEffect(() => {
 		if (!user) return
@@ -64,6 +68,69 @@ function CartPage() {
 			}
 		})()
 	}, [dispatch, user])
+
+	useEffect(() => {
+		;(async () => {
+			try {
+				await dispatch(getShopInfo()).unwrap()
+			} catch (error) {
+				console.log(error)
+			}
+		})()
+	}, [dispatch])
+
+	useEffect(() => {
+		if (!shopInfo || !customerAddress) return
+		;(async () => {
+			try {
+				const service = await ghnApi.getService({
+					shop_id: Number(process.env.REACT_APP_GHN_SHOP_ID),
+					from_district: shopInfo.district_id,
+					to_district: customerAddress.district_id,
+				})
+
+				if (service.data.length === 0) return
+
+				const serviceId = service.data[0].service_id
+				const productSize = {
+					width: 0,
+					height: 0,
+					weight: 0,
+					length: 0,
+				}
+
+				selectedItems.forEach(id => {
+					const index = cartItems.findIndex(e => e.id === id)
+					if (index >= 0) {
+						productSize.width +=
+							cartItems[index].width * cartItems[index].quantity
+						productSize.height +=
+							cartItems[index].height * cartItems[index].quantity
+						productSize.weight +=
+							cartItems[index].weight * cartItems[index].quantity
+						productSize.length +=
+							cartItems[index].length * cartItems[index].quantity
+					}
+				})
+
+				const data = {
+					service_id: serviceId,
+					service_type_id: null,
+					from_district_id: shopInfo.district_id,
+					to_district_id: customerAddress.district_id,
+					to_ward_code: customerAddress.ward_code,
+					insurance_value: 10000,
+					coupon: null,
+					...productSize,
+				}
+
+				const response = await ghnApi.getFee(data)
+				setDeliveryCost(response.data.total)
+			} catch (error) {
+				setDeliveryCost(0)
+			}
+		})()
+	}, [shopInfo, customerAddress, cartItems, selectedItems])
 
 	const handleSelect = (checked, data) => {
 		if (checked) {
@@ -169,6 +236,10 @@ function CartPage() {
 		}
 	}
 
+	const handleApplyCoupon = code => {
+		console.log(code)
+	}
+
 	return (
 		<div style={{ padding: '48px 0' }}>
 			<Row gutter={16}>
@@ -186,7 +257,11 @@ function CartPage() {
 
 				<Col span="7">
 					<div style={{ marginTop: 36 }}>
-						<DeliveryAddress data={deliveryAddress} />
+						<DeliveryAddress data={customerAddress} />
+					</div>
+
+					<div style={{ marginTop: 16 }}>
+						<ApplyCoupon onSubmit={handleApplyCoupon} />
 					</div>
 
 					<div style={{ marginTop: 16 }}>

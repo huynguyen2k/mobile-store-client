@@ -34,10 +34,10 @@ function DeliveryAddress({ data }) {
 				{data ? (
 					<>
 						<h4 className="customer">{data.full_name}</h4>
-						<span className="address">Địa chỉ: {data.full_address}</span>
 						<span className="phone-number">
 							Điện thoại: {data.phone_number}
 						</span>
+						<span className="address">Địa chỉ: {data.full_address}</span>
 					</>
 				) : (
 					<span>Hiện chưa có địa chỉ</span>
