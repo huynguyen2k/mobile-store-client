@@ -9,6 +9,10 @@ const couponsApi = {
 		const url = '/api/coupons'
 		return axiosClient.post(url, data)
 	},
+	apply(data) {
+		const url = '/api/coupons/apply'
+		return axiosClient.post(url, data)
+	},
 	update(data) {
 		const url = `/api/coupons/${data.id}`
 		return axiosClient.put(url, data)

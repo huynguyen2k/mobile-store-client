@@ -9,10 +9,21 @@ import ApplyCoupon from '../components/ApplyCoupon'
 import CartList from '../components/CartList'
 import DeliveryAddress from '../components/DeliveryAddress'
 import Order from '../components/Order'
+import moment from 'moment'
+import couponsApi from 'api/couponsApi'
+import OrderButton from '../components/OrderButton'
+import orderStatus from 'constants/orderStatus'
+import sleep from 'utils/sleep'
+import orderApi from 'api/orderApi'
+import Swal from 'sweetalert2'
+import { useNavigate } from 'react-router-dom'
 
 function CartPage() {
+	const navigate = useNavigate()
 	const dispatch = useDispatch()
 
+	const [orderBtnLoading, setOrderBtnLoading] = useState(false)
+	const [coupon, setCoupon] = useState(null)
 	const [deliveryCost, setDeliveryCost] = useState(0)
 	const [selectedItems, setSelectedItems] = useState([])
 
@@ -47,16 +58,20 @@ function CartPage() {
 			return result
 		}, 0)
 
-		const discount = 0
+		let discountValue = 0
+		if (coupon) {
+			discountValue = coupon.discount_value
+		}
 
 		return {
 			total_product: totalProduct,
 			total_price: totalPrice,
 			delivery_cost: deliveryCost,
-			discount: discount,
-			final_price: totalPrice + deliveryCost - discount,
+			coupons_id: coupon ? coupon.id : null,
+			discount: discountValue,
+			final_price: totalPrice + deliveryCost - discountValue,
 		}
-	}, [cartItems, selectedItems, deliveryCost])
+	}, [cartItems, selectedItems, deliveryCost, coupon])
 
 	useEffect(() => {
 		if (!user) return
@@ -89,7 +104,9 @@ function CartPage() {
 					to_district: customerAddress.district_id,
 				})
 
-				if (service.data.length === 0) return
+				if (service.data.length === 0 || selectedItems.length === 0) {
+					return setDeliveryCost(0)
+				}
 
 				const serviceId = service.data[0].service_id
 				const productSize = {
@@ -210,9 +227,6 @@ function CartPage() {
 			)
 
 			setSelectedItems([])
-			notification.success({
-				message: 'Xóa các sản phẩm đã chọn thành công!',
-			})
 		} catch (error) {
 			console.log(error)
 		}
@@ -236,8 +250,82 @@ function CartPage() {
 		}
 	}
 
-	const handleApplyCoupon = code => {
-		console.log(code)
+	const handleApplyCoupon = async code => {
+		try {
+			const response = await couponsApi.apply({
+				code,
+				current_date: moment().format('YYYY-MM-DD HH:mm:ss'),
+			})
+			notification.success({
+				message: 'Áp dụng mã giảm giá thành công!',
+			})
+			setCoupon(response.content)
+		} catch (error) {
+			notification.error({
+				message: error.message,
+			})
+			setCoupon(null)
+		}
+	}
+
+	const handleOrderItem = async () => {
+		if (!customerAddress) {
+			return notification.info({
+				message: 'Vui lòng chọn địa chỉ giao hàng trước khi đặt mua!',
+			})
+		}
+
+		const data = {
+			order: {
+				total_price: order.final_price,
+				delivery_cost: order.delivery_cost,
+				coupons_id: order.coupons_id,
+				discount_value: order.discount,
+				status_id: orderStatus.waiting.id,
+				shop_name: shopInfo.name,
+				shop_phone: shopInfo.phone_number,
+				shop_address: shopInfo.full_address,
+				customer_id: user.id,
+				customer_name: customerAddress.full_name,
+				customer_phone: customerAddress.phone_number,
+				customer_address: customerAddress.full_address,
+				created_date: moment().format('YYYY-MM-DD HH:mm:ss'),
+			},
+
+			orderDetail: selectedItems.map(id => {
+				const index = cartItems.findIndex(e => e.id === id)
+				if (index >= 0) {
+					return {
+						price: cartItems[index].sale_price,
+						quantity: cartItems[index].quantity,
+						product_option_id: cartItems[index].product_option_id,
+					}
+				}
+				return null
+			}),
+		}
+
+		try {
+			setOrderBtnLoading(true)
+			await sleep(1000)
+			const response = await orderApi.add(data)
+
+			await handleDeleteSelectedItems()
+			setCoupon(null)
+
+			await Swal.fire({
+				title: 'Thông báo!',
+				text: response.message,
+				icon: 'success',
+				confirmButtonText: 'Xác nhận',
+				confirmButtonColor: 'var(--success)',
+			})
+
+			navigate(`/customer/order/${response.orderId}`)
+		} catch (error) {
+			console.log(error)
+			setOrderBtnLoading(false)
+		}
 	}
 
 	return (
@@ -266,6 +354,14 @@ function CartPage() {
 
 					<div style={{ marginTop: 16 }}>
 						<Order data={order} />
+					</div>
+
+					<div style={{ marginTop: 16 }}>
+						<OrderButton
+							loading={orderBtnLoading}
+							onClick={handleOrderItem}
+							disabled={!selectedItems.length}
+						/>
 					</div>
 				</Col>
 			</Row>

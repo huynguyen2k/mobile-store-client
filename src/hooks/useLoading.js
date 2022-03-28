@@ -8,7 +8,7 @@ function useLoading() {
 		let isMounted = true
 
 		;(async () => {
-			await sleep(2000)
+			await sleep(1000)
 			if (isMounted) setLoading(false)
 		})()
 

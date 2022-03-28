@@ -1,0 +1,149 @@
+.order-detail {
+	&__header {
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		margin-bottom: 8px;
+
+		.title {
+			font-size: 1.25rem;
+			font-weight: 400;
+		}
+		.order-date {
+			font-size: 1rem;
+			font-weight: 400;
+		}
+	}
+
+	&__content {
+		border-radius: 4px;
+		padding: 32px;
+		background-color: white;
+		overflow: hidden;
+	}
+
+	&__line-break {
+		margin: 24px 0;
+		width: 100%;
+		border-top: 1px solid var(--light);
+	}
+
+	&__customer {
+		font-size: 1rem;
+
+		.title {
+			font-size: 1.125rem;
+			font-weight: 500;
+		}
+		.full-name {
+			margin-top: 4px;
+			display: block;
+		}
+		.phone-number {
+			margin-top: 4px;
+			display: block;
+		}
+		.address {
+			margin-top: 4px;
+			display: block;
+		}
+		.payment {
+			margin-top: 4px;
+			display: block;
+		}
+	}
+
+	&__row {
+		display: flex;
+		flex-flow: row wrap;
+		align-items: center;
+		border-bottom: 1px solid var(--light);
+
+		&:first-child {
+			border-top: 1px solid var(--light);
+		}
+	}
+	&__col-1 {
+		padding: 12px 0;
+		width: 55%;
+	}
+	&__col-2 {
+		padding: 12px 0;
+		width: 15%;
+		text-align: center;
+	}
+	&__col-3 {
+		padding: 12px 0;
+		width: 15%;
+		text-align: center;
+	}
+	&__col-4 {
+		padding: 12px 0;
+		width: 15%;
+		text-align: right;
+	}
+
+	&__product-list {
+		margin-top: 32px;
+		font-size: 1rem;
+
+		.title {
+			display: block;
+			font-weight: 400;
+		}
+		.product {
+			display: flex;
+			align-items: center;
+
+			.product-img {
+				width: 100px;
+			}
+
+			.product-name {
+				margin-left: 8px;
+				font-size: 1rem;
+				font-weight: 400;
+			}
+		}
+		.total-price {
+			color: var(--secondary);
+			font-weight: 500;
+		}
+	}
+
+	&__order-info {
+		margin-top: 16px;
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		font-size: 1rem;
+
+		.discount-value {
+			color: var(--success);
+		}
+		.final-price {
+			color: var(--secondary);
+			font-size: 1.5rem;
+			font-weight: 500;
+		}
+
+		.row {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+
+			& + .row {
+				margin-top: 8px;
+			}
+
+			.label {
+				margin-right: 72px;
+				display: inline-block;
+			}
+			.content {
+				text-align: right;
+				display: inline-block;
+			}
+		}
+	}
+}

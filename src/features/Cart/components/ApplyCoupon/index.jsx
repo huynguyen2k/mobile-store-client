@@ -28,7 +28,10 @@ function ApplyCoupon({ onSubmit }) {
 
 	return (
 		<div className="apply-coupon">
-			<span className="apply-coupon__title">Mã khuyến mãi</span>
+			<span className="apply-coupon__header">
+				<span className="title">Mã khuyến mãi</span>
+				<span className="apply-one">Chỉ áp dụng 1</span>
+			</span>
 
 			<form className="apply-coupon__form" onSubmit={handleSubmit}>
 				<input

@@ -32,6 +32,9 @@ import RequireAuth from 'components/RequireAuth'
 import AccountPage from 'features/CustomerAccount/pages/Account'
 import AddressPage from 'features/CustomerAccount/pages/Address'
 import CartPage from 'features/Cart/pages/cart'
+import OrderPage from 'features/CustomerAccount/pages/Order'
+import OrderManagementPage from 'features/OrderManagement/pages/Order'
+import OrderDetailPage from 'features/OrderManagement/pages/OrderDetail'
 
 function App() {
 	return (
@@ -60,6 +63,7 @@ function App() {
 						<Route path="notification" element={<CustomerNotificationPage />} />
 						<Route path="address" element={<AddressPage />} />
 						<Route path="cart" element={<CartPage />} />
+						<Route path="order" element={<OrderPage />} />
 					</Route>
 				</Route>
 
@@ -103,6 +107,8 @@ function App() {
 					</Route>
 
 					<Route path="supplier" element={<SupplierPage />} />
+					<Route path="order" element={<OrderManagementPage />} />
+					<Route path="order/:orderId" element={<OrderDetailPage />} />
 					<Route path="banner" element={<BannerPage />} />
 					<Route path="coupons" element={<CouponsPage />} />
 					<Route path="notification" element={<NotificationPage />} />

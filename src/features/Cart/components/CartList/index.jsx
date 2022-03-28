@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import CartItem from '../CartItem'
 import './style.scss'
 import { DeleteOutlined } from '@ant-design/icons'
+import EmptyData from 'components/EmptyData'
 
 CartList.propTypes = {
 	data: PropTypes.array,
@@ -102,6 +103,10 @@ function CartList(props) {
 						onDelete={onDelete}
 					/>
 				))}
+
+				{data.length === 0 && (
+					<EmptyData title="Chưa có sản phẩm trong giỏ hàng!" />
+				)}
 			</div>
 		</div>
 	)

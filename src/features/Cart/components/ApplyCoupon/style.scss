@@ -3,10 +3,17 @@
 	padding: 16px;
 	background-color: white;
 
-	&__title {
-		display: block;
-		margin-bottom: 4px;
+	&__header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 8px;
 		font-size: 1rem;
+
+		.apply-one {
+			color: #787878;
+			font-size: 0.875rem;
+		}
 	}
 
 	&__form {
