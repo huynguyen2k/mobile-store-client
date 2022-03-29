@@ -103,19 +103,22 @@ function OrderTable(props) {
 						let color = ''
 
 						if (record.status_id === orderStatus.waiting.id) {
-							color = 'warning'
+							color = 'var(--orange)'
 						}
 						if (record.status_id === orderStatus.processing.id) {
-							color = 'processing'
+							color = 'var(--primary)'
 						}
 						if (record.status_id === orderStatus.delivering.id) {
-							color = 'default'
+							color = 'var(--gray)'
+						}
+						if (record.status_id === orderStatus.delivered.id) {
+							color = 'var(--cyan)'
 						}
 						if (record.status_id === orderStatus.completed.id) {
-							color = 'success'
+							color = 'var(--success)'
 						}
 						if (record.status_id === orderStatus.cancelled.id) {
-							color = 'error'
+							color = 'var(--secondary)'
 						}
 
 						return <Tag color={color}>{value}</Tag>

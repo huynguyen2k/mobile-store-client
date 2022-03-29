@@ -99,10 +99,16 @@
 				width: 100px;
 			}
 
-			.product-name {
+			.product-info {
 				margin-left: 8px;
-				font-size: 1rem;
-				font-weight: 400;
+
+				.product-name {
+					font-size: 1.125rem;
+					font-weight: 400;
+				}
+				.btn-wrap {
+					margin-top: 8px;
+				}
 			}
 		}
 		.total-price {

@@ -6,24 +6,39 @@ import formatCurrency from 'utils/formatCurrency'
 import moment from 'moment'
 import orderStatus from 'constants/orderStatus'
 import UserRoles from 'constants/UserRoles'
+import { Link } from 'react-router-dom'
 
 OrderDetail.propTypes = {
 	user: PropTypes.object,
 	data: PropTypes.object,
+	ratingList: PropTypes.array,
 	orderStatusList: PropTypes.array,
 	onConfirm: PropTypes.func,
 	onCancel: PropTypes.func,
+	onRating: PropTypes.func,
 }
 
 OrderDetail.defaultProps = {
 	user: null,
 	data: null,
+	ratingList: [],
 	orderStatusList: [],
 	onConfirm: null,
 	onCancel: null,
+	onRating: null,
 }
 
-function OrderDetail({ user, data, orderStatusList, onConfirm, onCancel }) {
+function OrderDetail(props) {
+	const {
+		user,
+		data,
+		ratingList,
+		orderStatusList,
+		onConfirm,
+		onCancel,
+		onRating,
+	} = props
+
 	const handleConfirm = () => {
 		if (onConfirm) {
 			onConfirm({
@@ -48,6 +63,12 @@ function OrderDetail({ user, data, orderStatusList, onConfirm, onCancel }) {
 		}
 	}
 
+	const handleRating = data => {
+		if (onRating) {
+			onRating(data)
+		}
+	}
+
 	if (!data) return null
 	return (
 		<div className="order-detail">
@@ -66,36 +87,53 @@ function OrderDetail({ user, data, orderStatusList, onConfirm, onCancel }) {
 			<div className="order-detail__content">
 				<div className="order-detail__order-tracking">
 					<Steps>
-						{orderStatusList
-							.filter(
-								e =>
-									e.id !== orderStatus.completed.id &&
-									e.id !== orderStatus.cancelled.id
-							)
-							.map(e => {
-								const index = data.orderStatus.findIndex(
-									x => x.status_id === e.id
-								)
-								let status = data.status_id === e.id ? 'process' : 'wait'
-								let description = ''
+						{data.status_id === orderStatus.cancelled.id
+							? data.orderStatus.map(e => {
+									return (
+										<Steps.Step
+											key={e.id}
+											title={e.status_name}
+											status={
+												e.status_id === data.status_id ? 'error' : 'finish'
+											}
+											description={moment(
+												e.created_date,
+												'YYYY-MM-DD HH:mm:ss',
+												true
+											).format('HH:mm DD/MM/YYYY')}
+										/>
+									)
+							  })
+							: orderStatusList
+									.filter(
+										e =>
+											e.id !== orderStatus.completed.id &&
+											e.id !== orderStatus.cancelled.id
+									)
+									.map(e => {
+										const index = data.orderStatus.findIndex(
+											x => x.status_id === e.id
+										)
+										let status = data.status_id === e.id ? 'process' : 'wait'
+										let description = ''
 
-								if (index >= 0) {
-									status = 'finish'
-									description = moment(
-										data.orderStatus[index].created_date,
-										'YYYY-MM-DD HH:mm:ss',
-										true
-									).format('HH:mm DD/MM/YYYY')
-								}
-								return (
-									<Steps.Step
-										key={e.id}
-										title={e.name}
-										status={status}
-										description={description}
-									/>
-								)
-							})}
+										if (index >= 0) {
+											status = 'finish'
+											description = moment(
+												data.orderStatus[index].created_date,
+												'YYYY-MM-DD HH:mm:ss',
+												true
+											).format('HH:mm DD/MM/YYYY')
+										}
+										return (
+											<Steps.Step
+												key={e.id}
+												title={e.name}
+												status={status}
+												description={description}
+											/>
+										)
+									})}
 					</Steps>
 				</div>
 
@@ -138,7 +176,37 @@ function OrderDetail({ user, data, orderStatusList, onConfirm, onCancel }) {
 										src={e.product_image}
 										alt={e.product_name}
 									/>
-									<h4 className="product-name">{e.product_name}</h4>
+									<div className="product-info">
+										<h4 className="product-name">{e.product_name}</h4>
+										<span className="product-option">
+											{`${e.ram_name} - ${e.rom_name} - ${e.color_name}`}
+										</span>
+
+										<div className="btn-wrap">
+											{user.role_id === UserRoles.CUSTOMER.id && (
+												<Link to={`/product-detail/${e.product_id}`}>
+													<Button ghost type="primary">
+														Mua lại
+													</Button>
+												</Link>
+											)}
+
+											{data.status_id === orderStatus.completed.id &&
+												user.role_id === UserRoles.CUSTOMER.id &&
+												ratingList.findIndex(
+													x => x.product_id === e.product_id
+												) === -1 && (
+													<Button
+														ghost
+														type="primary"
+														style={{ marginLeft: 8 }}
+														onClick={() => handleRating(e)}
+													>
+														Viết nhận xét
+													</Button>
+												)}
+										</div>
+									</div>
 								</div>
 							</div>
 							<div className="order-detail__col-2">

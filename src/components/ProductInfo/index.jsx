@@ -214,7 +214,7 @@ function ProductInfo({ data, onBuyProduct }) {
 			<Divider style={{ margin: '16px 0' }} />
 
 			<div className="product-option">
-				<span className="product-option-text">Cầu hình sản phẩm</span>
+				<span className="product-option-text">Cấu hình sản phẩm</span>
 				<div className="option-list">
 					<Space>{renderRamOptionList()}</Space>
 				</div>

@@ -35,6 +35,7 @@ import CartPage from 'features/Cart/pages/cart'
 import OrderPage from 'features/CustomerAccount/pages/Order'
 import OrderManagementPage from 'features/OrderManagement/pages/Order'
 import OrderDetailPage from 'features/OrderManagement/pages/OrderDetail'
+import ProductRatingPage from 'features/CustomerAccount/pages/ProductRating'
 
 function App() {
 	return (
@@ -64,6 +65,15 @@ function App() {
 						<Route path="address" element={<AddressPage />} />
 						<Route path="cart" element={<CartPage />} />
 						<Route path="order" element={<OrderPage />} />
+						<Route
+							path="order/:orderId"
+							element={
+								<div style={{ padding: '48px 0' }}>
+									<OrderDetailPage />
+								</div>
+							}
+						/>
+						<Route path="product-rating" element={<ProductRatingPage />} />
 					</Route>
 				</Route>
 
