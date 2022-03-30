@@ -1,9 +1,9 @@
 import axiosClient from './axiosClient'
 
 const ratingApi = {
-	getAll(userId) {
+	getAll(params) {
 		const url = '/api/rating'
-		return axiosClient.get(url, { params: { userId } })
+		return axiosClient.get(url, { params })
 	},
 	add(data) {
 		const url = '/api/rating'

@@ -5,13 +5,15 @@ import ProductDetail from 'components/ProductDetail'
 import ProductSpecification from 'components/ProductSpecification'
 import useFetchData from 'hooks/useFetchData'
 import useProductDetail from 'hooks/useProductDetail'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import GridSlider from '../components/GridSlider'
 import moment from 'moment'
 import { addCartItem } from 'features/Cart/cartSlice'
 import { notification } from 'antd'
+import ratingApi from 'api/ratingApi'
+import RatingList from '../components/RatingList'
 
 function ProductDetailPage() {
 	const location = useLocation()
@@ -24,6 +26,12 @@ function ProductDetailPage() {
 
 	const { data } = useProductDetail(productId)
 	const { data: productList } = useFetchData(productApi.getAll)
+
+	const getRatingList = useCallback(
+		() => ratingApi.getAll({ productId: productId }),
+		[productId]
+	)
+	const { data: ratingList } = useFetchData(getRatingList)
 
 	const handleBuyProduct = async (option, quantity) => {
 		if (!user) {
@@ -83,6 +91,7 @@ function ProductDetailPage() {
 				<GridSlider limit={10} title="Sản phẩm khác" data={productList} />
 				<ProductSpecification data={data} />
 				<ProductDescription data={data} />
+				<RatingList data={ratingList} />
 			</Container>
 		</div>
 	)

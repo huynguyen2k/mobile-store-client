@@ -8,7 +8,6 @@ import {
 	HeartOutlined,
 	LogoutOutlined,
 	ShoppingOutlined,
-	StarOutlined,
 	UserOutlined,
 } from '@ant-design/icons'
 import { Link, useLocation } from 'react-router-dom'
@@ -63,11 +62,6 @@ function HeaderAccount({ loggedIn, user, notification, onLogout }) {
 							</Menu.Item>
 							<Menu.Item key={5} icon={<HeartOutlined />}>
 								<Link to="/customer/favorite-product">Sản phẩm yêu thích</Link>
-							</Menu.Item>
-							<Menu.Item key={6} icon={<StarOutlined />}>
-								<Link to="/customer/product-rating">
-									Nhận xét sản phẩm đã mua
-								</Link>
 							</Menu.Item>
 							<Menu.Item key={7} icon={<LogoutOutlined />} onClick={onLogout}>
 								<span>Đăng xuất tài khoản</span>

@@ -23,7 +23,7 @@ function OrderDetailPage() {
 	const user = useSelector(state => state.auth.user)
 	const { data: orderStatusList } = useFetchData(orderApi.getAllOrderStatus)
 	const { data: ratingList, refetchData: fetchRatingList } = useFetchData(() =>
-		ratingApi.getAll(user.id)
+		ratingApi.getAll({ userId: user.id })
 	)
 
 	useEffect(() => {

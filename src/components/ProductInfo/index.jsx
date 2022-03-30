@@ -187,8 +187,8 @@ function ProductInfo({ data, onBuyProduct }) {
 			<h3 className="product-name">Điện thoại {data.name}</h3>
 
 			<div className="rating-box">
-				<Rate disabled allowHalf defaultValue={2.5} />
-				<span className="rating-number">(519 đánh giá)</span>
+				<Rate disabled allowHalf defaultValue={data.rating} />
+				<span className="rating-number">({data.rating_quantity} đánh giá)</span>
 				<span className="break-line">|</span>
 				<span className="sold-quantity">Đã bán {getTotalSoldQuantity()}</span>
 			</div>

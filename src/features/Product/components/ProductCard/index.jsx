@@ -1,5 +1,5 @@
 import { Rate } from 'antd'
-import React from 'react'
+import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import formatCurrency from 'utils/formatCurrency'
 import { Link } from 'react-router-dom'
@@ -15,6 +15,13 @@ ProductCart.defaultProps = {
 }
 
 function ProductCart({ data }) {
+	const soldQuantity = useMemo(() => {
+		return data.product_options.reduce(
+			(result, x) => result + x.sold_quantity,
+			0
+		)
+	}, [data])
+
 	const renderProductPrice = () => {
 		if (!data || !data.product_options.length) return null
 
@@ -46,9 +53,14 @@ function ProductCart({ data }) {
 				<h3 className="product-name">{data.name}</h3>
 
 				<div className="rating-wrap">
-					<Rate allowHalf disabled defaultValue={2.5} className="rating" />
+					<Rate
+						allowHalf
+						disabled
+						defaultValue={data.rating}
+						className="rating"
+					/>
 					<span className="break"></span>
-					<span className="sold-quantity">Đã bán 100</span>
+					<span className="sold-quantity">Đã bán {soldQuantity}</span>
 				</div>
 
 				{renderProductPrice()}
