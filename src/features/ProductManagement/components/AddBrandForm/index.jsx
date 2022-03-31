@@ -1,14 +1,13 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import './style.scss'
-import * as yup from 'yup'
-import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import moment from 'moment'
 import { Button, Form, Typography } from 'antd'
 import InputField from 'components/FormFields/InputField'
-import { StarOutlined } from '@ant-design/icons/lib/icons'
 import SwitchField from 'components/FormFields/SwitchField'
+import moment from 'moment'
+import PropTypes from 'prop-types'
+import React from 'react'
+import { useForm } from 'react-hook-form'
+import * as yup from 'yup'
+import './style.scss'
 
 AddBrandForm.propTypes = {
 	onSubmit: PropTypes.func,
@@ -73,7 +72,6 @@ function AddBrandForm({ onSubmit }) {
 					form={form}
 					name="name"
 					label="Thương hiệu"
-					prefix={<StarOutlined />}
 					placeholder="Nhập tên thương hiệu"
 				/>
 

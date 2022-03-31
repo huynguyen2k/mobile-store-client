@@ -5,7 +5,7 @@ import ProductDetail from 'components/ProductDetail'
 import ProductSpecification from 'components/ProductSpecification'
 import useFetchData from 'hooks/useFetchData'
 import useProductDetail from 'hooks/useProductDetail'
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import GridSlider from '../components/GridSlider'
@@ -27,11 +27,16 @@ function ProductDetailPage() {
 	const { data } = useProductDetail(productId)
 	const { data: productList } = useFetchData(productApi.getAll)
 
-	const getRatingList = useCallback(
-		() => ratingApi.getAll({ productId: productId }),
-		[productId]
-	)
-	const { data: ratingList } = useFetchData(getRatingList)
+	const getRatingList = useCallback(() => {
+		return ratingApi.getAll({ productId: productId })
+	}, [productId])
+
+	const { data: ratingList, refetchData: refetchRatingList } =
+		useFetchData(getRatingList)
+
+	useEffect(() => {
+		refetchRatingList()
+	}, [getRatingList, refetchRatingList])
 
 	const handleBuyProduct = async (option, quantity) => {
 		if (!user) {

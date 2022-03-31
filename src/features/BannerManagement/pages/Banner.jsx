@@ -124,6 +124,7 @@ function BannerPage() {
 			<Modal
 				centered
 				destroyOnClose
+				width={650}
 				visible={isModalVisible}
 				onCancel={() => setIsModalVisible(false)}
 				footer={null}

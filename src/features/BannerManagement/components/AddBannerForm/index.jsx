@@ -1,15 +1,14 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import * as yup from 'yup'
-import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import moment from 'moment'
-import { useSelector } from 'react-redux'
 import { Button, Form, Typography } from 'antd'
 import InputField from 'components/FormFields/InputField'
-import { AreaChartOutlined } from '@ant-design/icons/lib/icons'
 import SwitchField from 'components/FormFields/SwitchField'
 import UploadField from 'components/FormFields/UploadField'
+import moment from 'moment'
+import PropTypes from 'prop-types'
+import React from 'react'
+import { useForm } from 'react-hook-form'
+import { useSelector } from 'react-redux'
+import * as yup from 'yup'
 
 AddBannerForm.propTypes = {
 	onSubmit: PropTypes.func,
@@ -85,7 +84,6 @@ function AddBannerForm({ onSubmit }) {
 					form={form}
 					name="name"
 					label="Tên banner"
-					prefix={<AreaChartOutlined />}
 					placeholder="Nhập tên banner"
 				/>
 

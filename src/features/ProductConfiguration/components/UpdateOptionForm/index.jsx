@@ -1,4 +1,3 @@
-import { SettingOutlined } from '@ant-design/icons/lib/icons'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Button, Form, Typography } from 'antd'
 import InputField from 'components/FormFields/InputField'
@@ -66,7 +65,6 @@ function UpdateOptionForm({ data, onSubmit }) {
 					form={form}
 					name="name"
 					label="Tên cấu hình"
-					prefix={<SettingOutlined />}
 					placeholder="Nhập tên cấu hình"
 				/>
 

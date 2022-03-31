@@ -1,13 +1,12 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import * as yup from 'yup'
-import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Button, Form, Typography } from 'antd'
-import UploadField from 'components/FormFields/UploadField'
 import InputField from 'components/FormFields/InputField'
-import { AreaChartOutlined } from '@ant-design/icons/lib/icons'
 import SwitchField from 'components/FormFields/SwitchField'
+import UploadField from 'components/FormFields/UploadField'
+import PropTypes from 'prop-types'
+import React from 'react'
+import { useForm } from 'react-hook-form'
+import * as yup from 'yup'
 
 UpdateBannerForm.propTypes = {
 	data: PropTypes.object,
@@ -87,7 +86,6 @@ function UpdateBannerForm({ data, onSubmit }) {
 					form={form}
 					name="name"
 					label="Tên banner"
-					prefix={<AreaChartOutlined />}
 					placeholder="Nhập tên banner"
 				/>
 

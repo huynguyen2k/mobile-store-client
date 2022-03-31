@@ -172,6 +172,10 @@ function AddSupplierForm({ onSubmit }) {
 					name="address"
 					label="Địa chỉ"
 					placeholder="Nhập địa chỉ của nhà cung cấp"
+					autoSize={{
+						minRows: 4,
+						maxRows: 4,
+					}}
 				/>
 
 				<Form.Item

@@ -17,6 +17,10 @@ const ratingApi = {
 		const url = '/api/rating/delete-image'
 		return axiosClient.post(url, data)
 	},
+	delete(id) {
+		const url = `/api/rating/${id}`
+		return axiosClient.delete(url)
+	},
 }
 
 export default ratingApi

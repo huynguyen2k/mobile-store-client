@@ -1,12 +1,11 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import * as yup from 'yup'
-import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Button, Form, Typography } from 'antd'
 import InputField from 'components/FormFields/InputField'
-import { StarOutlined } from '@ant-design/icons/lib/icons'
 import SwitchField from 'components/FormFields/SwitchField'
+import PropTypes from 'prop-types'
+import React from 'react'
+import { useForm } from 'react-hook-form'
+import * as yup from 'yup'
 
 UpdateBrandForm.propTypes = {
 	data: PropTypes.object,
@@ -73,7 +72,6 @@ function UpdateBrandForm({ data, onSubmit }) {
 					form={form}
 					name="name"
 					label="Thương hiệu"
-					prefix={<StarOutlined />}
 					placeholder="Nhập tên thương hiệu"
 				/>
 

@@ -7,7 +7,6 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import moment from 'moment'
 import { Button, Form, Typography } from 'antd'
 import InputField from 'components/FormFields/InputField'
-import { SettingOutlined } from '@ant-design/icons/lib/icons'
 
 AddOptionForm.propTypes = {
 	onSubmit: PropTypes.func,
@@ -70,7 +69,6 @@ function AddOptionForm({ onSubmit }) {
 					form={form}
 					name="name"
 					label="Tên cấu hình"
-					prefix={<SettingOutlined />}
 					placeholder="Nhập tên cấu hình"
 				/>
 

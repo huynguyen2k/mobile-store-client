@@ -35,7 +35,7 @@ import CartPage from 'features/Cart/pages/cart'
 import OrderPage from 'features/CustomerAccount/pages/Order'
 import OrderManagementPage from 'features/OrderManagement/pages/Order'
 import OrderDetailPage from 'features/OrderManagement/pages/OrderDetail'
-import ProductRatingPage from 'features/CustomerAccount/pages/ProductRating'
+import RatingManagementPage from 'features/RatingManagement/pages/RatingManagement'
 
 function App() {
 	return (
@@ -73,7 +73,6 @@ function App() {
 								</div>
 							}
 						/>
-						<Route path="product-rating" element={<ProductRatingPage />} />
 					</Route>
 				</Route>
 
@@ -122,6 +121,7 @@ function App() {
 					<Route path="banner" element={<BannerPage />} />
 					<Route path="coupons" element={<CouponsPage />} />
 					<Route path="notification" element={<NotificationPage />} />
+					<Route path="rating" element={<RatingManagementPage />} />
 					<Route path="shop-info" element={<ShopInfoPage />} />
 				</Route>
 
