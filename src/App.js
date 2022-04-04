@@ -36,6 +36,7 @@ import OrderPage from 'features/CustomerAccount/pages/Order'
 import OrderManagementPage from 'features/OrderManagement/pages/Order'
 import OrderDetailPage from 'features/OrderManagement/pages/OrderDetail'
 import RatingManagementPage from 'features/RatingManagement/pages/RatingManagement'
+import ProductPage from 'features/Product/pages/Product'
 
 function App() {
 	return (
@@ -48,6 +49,7 @@ function App() {
 
 				<Route path="/" element={<CustomerLayout />}>
 					<Route index element={<HomePage />} />
+					<Route path="product" element={<ProductPage />} />
 					<Route path="product-detail/:productId" element={<DetailPage />} />
 
 					<Route

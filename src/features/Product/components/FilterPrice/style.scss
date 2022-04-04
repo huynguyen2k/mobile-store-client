@@ -1,0 +1,39 @@
+.filter-price {
+	&__form-row {
+		display: flex;
+		align-items: center;
+
+		& + & {
+			margin-top: 8px;
+		}
+		.line-break {
+			margin: 0 4px;
+			width: 8px;
+			border-top: 1px solid #ccc;
+		}
+	}
+
+	&__form-input {
+		border: 1px solid #ccc;
+		border-radius: 3px;
+		padding: 4px 6px;
+		width: 50%;
+
+		&:focus {
+			outline: none;
+			border-color: var(--blue);
+		}
+	}
+
+	&__apply-btn {
+		border: none;
+		border-radius: 3px;
+		padding: 4px 16px;
+
+		color: white;
+		background-color: var(--blue);
+
+		cursor: pointer;
+		user-select: none;
+	}
+}

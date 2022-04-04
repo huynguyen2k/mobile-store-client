@@ -1,0 +1,47 @@
+.product-filter {
+	border-right: 1px solid var(--light);
+	height: 100%;
+	background-color: white;
+
+	&__item {
+		border-bottom: 1px solid var(--light);
+		padding: 16px;
+	}
+
+	&__title {
+		font-size: 0.875rem;
+		font-weight: 500;
+	}
+
+	&__content {
+		margin-top: 8px;
+	}
+
+	.ant-checkbox-group-item {
+		display: flex;
+
+		& + .ant-checkbox-group-item {
+			margin-top: 8px;
+		}
+	}
+
+	&__rating {
+		display: flex;
+		align-items: flex-end;
+		user-select: none;
+		cursor: pointer;
+
+		& + & {
+			margin-top: 4px;
+		}
+
+		.ant-rate-star {
+			cursor: inherit;
+		}
+
+		.text {
+			margin-left: 8px;
+			font-size: 0.875rem;
+		}
+	}
+}

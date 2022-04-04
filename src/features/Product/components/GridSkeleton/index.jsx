@@ -5,16 +5,18 @@ import './style.scss'
 
 GridSkeleton.propTypes = {
 	limit: PropTypes.number,
+	gutter: PropTypes.array,
 }
 
 GridSkeleton.defaultProps = {
 	limit: 8,
+	gutter: [20, 20],
 }
 
-function GridSkeleton({ limit }) {
+function GridSkeleton({ limit, gutter }) {
 	return (
 		<div className="grid-skeleton">
-			<Row gutter={[20, 20]}>
+			<Row gutter={gutter}>
 				{[...Array(limit).keys()].map(value => (
 					<Col key={value} span="6">
 						<div className="skeleton-card">
