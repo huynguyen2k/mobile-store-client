@@ -1,0 +1,30 @@
+.filter-tabs {
+	border-bottom: 1px solid var(--light);
+	background-color: white;
+
+	&__link {
+		position: relative;
+		margin-left: 16px;
+		display: inline-block;
+		padding: 10px 16px;
+		color: black;
+
+		font-size: 0.875rem;
+		font-weight: 400;
+
+		&.active {
+			color: var(--primary);
+
+			&::before {
+				content: '';
+				position: absolute;
+				bottom: 0;
+				left: 0;
+
+				width: 100%;
+				height: 4px;
+				background-color: var(--primary);
+			}
+		}
+	}
+}

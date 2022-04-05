@@ -6,9 +6,9 @@ const productApi = {
 		return axiosClient.get(url)
 	},
 
-	getAll(data) {
+	getAll(params) {
 		const url = '/api/product'
-		return axiosClient.get(url)
+		return axiosClient.get(url, { params })
 	},
 
 	add(data) {
