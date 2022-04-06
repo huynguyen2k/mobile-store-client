@@ -8,7 +8,10 @@ function CustomerLayout() {
 	return (
 		<div className="customer-layout">
 			<Header />
-			<main className="customer-layout__main">
+			<main
+				className="customer-layout__main"
+				style={{ position: 'relative', zIndex: 10 }}
+			>
 				<Outlet />
 			</main>
 			<Footer />
