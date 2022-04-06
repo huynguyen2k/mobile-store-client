@@ -3,6 +3,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import './style.scss'
 import FilterPrice from '../FilterPrice'
+import FilterPriceList from '../FilterPriceList'
 
 ProductFilter.propTypes = {
 	filter: PropTypes.object,
@@ -17,6 +18,14 @@ ProductFilter.defaultProps = {
 	brandOption: [],
 	ratingOption: [],
 }
+
+const priceList = [
+	{ maxPrice: 3000000 },
+	{ minPrice: 3000000, maxPrice: 7000000 },
+	{ minPrice: 7000000, maxPrice: 12000000 },
+	{ minPrice: 12000000, maxPrice: 25000000 },
+	{ minPrice: 25000000 },
+]
 
 function ProductFilter(props) {
 	const { filter, onFilterChange, brandOption, ratingOption } = props
@@ -46,13 +55,22 @@ function ProductFilter(props) {
 		}
 	}
 
-	const handlePriceChange = ({ minPrice, maxPrice }) => {
+	const handlePriceChange = data => {
 		if (onFilterChange) {
 			const newFilter = {
 				...filter,
-				min_price: minPrice,
-				max_price: maxPrice,
+				min_price: data.minPrice,
+				max_price: data.maxPrice,
 			}
+
+			if (!data.hasOwnProperty('minPrice')) {
+				delete newFilter.min_price
+			}
+
+			if (!data.hasOwnProperty('maxPrice')) {
+				delete newFilter.max_price
+			}
+
 			onFilterChange(newFilter)
 		}
 	}
@@ -89,6 +107,7 @@ function ProductFilter(props) {
 			<div className="product-filter__item">
 				<h3 className="product-filter__title">GIÁ</h3>
 				<div className="product-filter__content">
+					<FilterPriceList data={priceList} onClick={handlePriceChange} />
 					<FilterPrice onSubmit={handlePriceChange} />
 				</div>
 			</div>

@@ -2,6 +2,11 @@
 	margin-top: 16px;
 	background-color: white;
 
+	.slick-track {
+		margin-left: 0;
+		margin-right: 0;
+	}
+
 	&__title {
 		padding: 16px;
 		text-transform: uppercase;

@@ -20,8 +20,7 @@ function HeaderSearch({ onClick }) {
 
 	return (
 		<div className="header-search" onClick={handleClick}>
-			<SearchOutlined className="header-search__icon" />
-			<span className="header-search__text">Tìm kiếm</span>
+			<SearchOutlined />
 		</div>
 	)
 }

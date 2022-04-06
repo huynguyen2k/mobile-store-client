@@ -37,14 +37,6 @@ function HeaderNavBar() {
 					Liên hệ
 				</NavLink>
 			</li>
-			<li>
-				<NavLink
-					to="/support"
-					className={({ isActive }) => (isActive ? 'active' : '')}
-				>
-					Hỗ trợ
-				</NavLink>
-			</li>
 		</ul>
 	)
 }

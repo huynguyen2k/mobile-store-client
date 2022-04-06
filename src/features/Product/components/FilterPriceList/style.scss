@@ -1,0 +1,18 @@
+.filter-price-list {
+	margin-bottom: 8px;
+
+	&__item {
+		display: block;
+		border-radius: 16px;
+		padding: 4px 16px;
+		background-color: #eee;
+
+		font-size: 13px;
+		cursor: pointer;
+		user-select: none;
+
+		& + & {
+			margin-top: 6px;
+		}
+	}
+}

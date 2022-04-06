@@ -1,18 +1,17 @@
 .header-search {
-	align-self: center;
-	margin-right: 16px;
 	display: flex;
 	align-items: center;
+	justify-content: center;
+
+	margin-right: 16px;
+	border-radius: 50%;
+	width: 36px;
+	height: 36px;
+
+	color: white;
+	background-color: var(--blue);
+	font-size: 1.25rem;
 
 	cursor: pointer;
 	user-select: none;
-
-	&__icon {
-		font-size: 1.5rem;
-	}
-
-	&__text {
-		font-size: 1rem;
-		font-weight: 400;
-	}
 }

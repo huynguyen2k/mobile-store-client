@@ -16,7 +16,7 @@ function ProductPage() {
 
 	const queryParams = useMemo(() => {
 		const params = queryString.parse(location.search)
-		const newParams = { ...params }
+		const newParams = { ...params, published: 1 }
 
 		if (!newParams.hasOwnProperty('sort')) {
 			newParams.sort = 'default'

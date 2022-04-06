@@ -1,3 +1,4 @@
+import productApi from 'api/productApi'
 import Container from 'components/Container'
 import HeaderAccount from 'components/HeaderAccount'
 import HeaderCart from 'components/HeaderCart'
@@ -7,7 +8,8 @@ import SearchBox from 'components/SearchBox'
 import { logout } from 'features/Auth/authSlice'
 import { getAllCartItems, resetCartItems } from 'features/Cart/cartSlice'
 import { getCustomerNotification } from 'features/CustomerAccount/customerSlice'
-import React, { useEffect, useState } from 'react'
+import useFetchData from 'hooks/useFetchData'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import './style.scss'
@@ -22,6 +24,10 @@ function Header() {
 	const cartItems = useSelector(state => state.cart.cartItems)
 
 	const [openSearch, setOpenSearch] = useState(false)
+	const { data: productList } = useFetchData(productApi.getAll)
+	const productOptions = useMemo(() => {
+		return productList.map(x => ({ value: x.name }))
+	}, [productList])
 
 	useEffect(() => {
 		if (!user) return
@@ -65,7 +71,9 @@ function Header() {
 
 	return (
 		<header className="header">
-			{openSearch && <SearchBox onSubmit={handleSearchSubmit} />}
+			{openSearch && (
+				<SearchBox optionList={productOptions} onSubmit={handleSearchSubmit} />
+			)}
 
 			<Container>
 				<div className="header__container">

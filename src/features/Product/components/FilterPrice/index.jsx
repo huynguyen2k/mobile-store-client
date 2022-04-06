@@ -62,6 +62,7 @@ function FilterPrice({ onSubmit }) {
 
 	return (
 		<div className="filter-price">
+			<h4 className="filter-price__title">Chọn khoảng giá</h4>
 			<form className="filter-price__form" onSubmit={handleSubmit}>
 				<div className="filter-price__form-row">
 					<input

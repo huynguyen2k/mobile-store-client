@@ -25,7 +25,22 @@ function ProductDetailPage() {
 	const cartItems = useSelector(state => state.cart.cartItems)
 
 	const { data } = useProductDetail(productId)
-	const { data: productList } = useFetchData(productApi.getAll)
+
+	const getRelativeProductList = useCallback(() => {
+		return productApi.getAll({ published: 1, brand: data?.brand_id })
+	}, [data])
+
+	const { data: relativeProductList, refetchData: refetchRelativeProduct } =
+		useFetchData(getRelativeProductList)
+
+	useEffect(() => {
+		refetchRelativeProduct()
+	}, [data, refetchRelativeProduct])
+
+	const getOtherProductList = useCallback(() => {
+		return productApi.getAll({ published: 1 })
+	}, [])
+	const otherProduct = useFetchData(getOtherProductList)
 
 	const getRatingList = useCallback(() => {
 		return ratingApi.getAll({ productId: productId })
@@ -92,10 +107,23 @@ function ProductDetailPage() {
 		<div style={{ padding: '16px 0' }}>
 			<Container>
 				<ProductDetail data={data} onBuyProduct={handleBuyProduct} />
-				<GridSlider limit={10} title="Sản phẩm tương tự" data={productList} />
-				<GridSlider limit={10} title="Sản phẩm khác" data={productList} />
+
+				<GridSlider
+					limit={100}
+					title="Sản phẩm tương tự"
+					data={relativeProductList}
+				/>
+
+				<GridSlider
+					limit={100}
+					title="Sản phẩm khác"
+					data={otherProduct.data}
+				/>
+
 				<ProductSpecification data={data} />
+
 				<ProductDescription data={data} />
+
 				<RatingList data={ratingList} />
 			</Container>
 		</div>
