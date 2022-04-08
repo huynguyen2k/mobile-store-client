@@ -37,6 +37,7 @@ import OrderManagementPage from 'features/OrderManagement/pages/Order'
 import OrderDetailPage from 'features/OrderManagement/pages/OrderDetail'
 import RatingManagementPage from 'features/RatingManagement/pages/RatingManagement'
 import ProductPage from 'features/Product/pages/Product'
+import StatisticAdminPage from 'features/StatisticManagement/pages/StatisticAdmin'
 
 function App() {
 	return (
@@ -79,6 +80,8 @@ function App() {
 				</Route>
 
 				<Route path="/admin" element={<AdminLayout />}>
+					<Route index element={<StatisticAdminPage />} />
+
 					<Route path="user" element={<Outlet />}>
 						<Route path="staff" element={<StaffPage />} />
 						<Route path="customer" element={<CustomerPage />} />
