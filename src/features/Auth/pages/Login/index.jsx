@@ -27,10 +27,10 @@ function LoginPage() {
 				return navigate('/admin', { replace: true })
 			}
 			if (user.role_name === UserRoles.SALESMAN.name) {
-				return navigate('/salesman', { replace: true })
+				return navigate('/salesman/order', { replace: true })
 			}
 			if (user.role_name === UserRoles.WAREHOUSE_MANAGER.name) {
-				return navigate('/warehouse-manager', { replace: true })
+				return navigate('/warehouse-manager/supplier', { replace: true })
 			}
 
 			if (!location.state) return navigate('/', { replace: true })

@@ -26,8 +26,10 @@ import formatDateTime from 'utils/formatDateTime'
 import moment from 'moment'
 import Highlighter from 'react-highlight-words'
 import { Link } from 'react-router-dom'
+import UserRoles from 'constants/UserRoles'
 
 ProductTable.propTypes = {
+	user: PropTypes.object,
 	loading: PropTypes.bool,
 	data: PropTypes.array,
 	onDeleteProduct: PropTypes.func,
@@ -35,6 +37,7 @@ ProductTable.propTypes = {
 }
 
 ProductTable.defaultProps = {
+	user: null,
 	loading: false,
 	data: [],
 	onDeleteProduct: null,
@@ -42,7 +45,7 @@ ProductTable.defaultProps = {
 }
 
 function ProductTable(props) {
-	const { loading, data, onChangePublicStatus, onDeleteProduct } = props
+	const { user, loading, data, onChangePublicStatus, onDeleteProduct } = props
 	const [searchText, setSearchText] = useState('')
 	const [selectedRowKeys, setSelectedRowKeys] = useState([])
 
@@ -252,7 +255,13 @@ function ProductTable(props) {
 				{
 					title: () => (
 						<Space wrap align="center" size="small">
-							<Link to="/admin/product/add-product">
+							<Link
+								to={`${
+									user?.role_name === UserRoles.ADMIN.name
+										? '/admin/product/add-product'
+										: '/warehouse-manager/product/add-product'
+								}`}
+							>
 								<Tooltip placement="top" title="Thêm sản phẩm mới">
 									<Button
 										type="primary"
@@ -295,12 +304,24 @@ function ProductTable(props) {
 								overlay={
 									<Menu>
 										<Menu.Item key={1}>
-											<Link to={`/admin/product/product-detail/${record.id}`}>
+											<Link
+												to={`${
+													user?.role_name === UserRoles.ADMIN.name
+														? `/admin/product/product-detail/${record.id}`
+														: `/warehouse-manager/product/product-detail/${record.id}`
+												}`}
+											>
 												Xem chi tiết sản phẩm
 											</Link>
 										</Menu.Item>
 										<Menu.Item key={2}>
-											<Link to={`/admin/product/option-detail/${record.id}`}>
+											<Link
+												to={`${
+													user?.role_name === UserRoles.ADMIN.name
+														? `/admin/product/option-detail/${record.id}`
+														: `/warehouse-manager/product/option-detail/${record.id}`
+												}`}
+											>
 												Xem chi tiết cấu hình
 											</Link>
 										</Menu.Item>
@@ -319,7 +340,13 @@ function ProductTable(props) {
 								/>
 							</Dropdown>
 
-							<Link to={`/admin/product/update-product/${record.id}`}>
+							<Link
+								to={`${
+									user?.role_name === UserRoles.ADMIN.name
+										? `/admin/product/update-product/${record.id}`
+										: `/warehouse-manager/product/update-product/${record.id}`
+								}`}
+							>
 								<Tooltip placement="top" title="Chỉnh sửa sản phẩm">
 									<Button
 										ghost

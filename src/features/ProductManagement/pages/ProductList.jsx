@@ -2,11 +2,14 @@ import { notification } from 'antd'
 import productApi from 'api/productApi'
 import useFetchData from 'hooks/useFetchData'
 import React, { useMemo } from 'react'
+import { useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
 import sleep from 'utils/sleep'
 import ProductTable from '../components/ProductTable'
 
 function ProductListPage() {
+	const user = useSelector(state => state.auth.user)
+
 	const {
 		loading,
 		data: productList,
@@ -55,6 +58,7 @@ function ProductListPage() {
 	return (
 		<>
 			<ProductTable
+				user={user}
 				loading={loading}
 				data={productTableData}
 				onChangePublicStatus={handleChangePublicStatus}

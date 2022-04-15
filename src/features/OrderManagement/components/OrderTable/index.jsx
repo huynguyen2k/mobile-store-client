@@ -8,19 +8,22 @@ import formatCurrency from 'utils/formatCurrency'
 import { Link } from 'react-router-dom'
 import { EyeOutlined } from '@ant-design/icons'
 import orderStatus from 'constants/orderStatus'
+import UserRoles from 'constants/UserRoles'
 
 OrderTable.propTypes = {
+	user: PropTypes.object,
 	loading: PropTypes.bool,
 	data: PropTypes.array,
 }
 
 OrderTable.defaultProps = {
+	user: null,
 	loading: false,
 	data: [],
 }
 
 function OrderTable(props) {
-	const { loading, data } = props
+	const { user, loading, data } = props
 
 	return (
 		<Table
@@ -129,7 +132,13 @@ function OrderTable(props) {
 					dataIndex: 'action',
 					render: (value, record) => (
 						<Space wrap align="center" size="small">
-							<Link to={`/admin/order/${record.id}`}>
+							<Link
+								to={`${
+									user.role_name === UserRoles.ADMIN.name
+										? `/admin/order/${record.id}`
+										: `/salesman/order/${record.id}`
+								}`}
+							>
 								<Tooltip placement="top" title="Xem chi tiết đơn hàng">
 									<Button
 										ghost

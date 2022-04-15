@@ -38,6 +38,8 @@ import OrderDetailPage from 'features/OrderManagement/pages/OrderDetail'
 import RatingManagementPage from 'features/RatingManagement/pages/RatingManagement'
 import ProductPage from 'features/Product/pages/Product'
 import StatisticAdminPage from 'features/StatisticManagement/pages/StatisticAdmin'
+import SalesmanLayout from 'layout/Salesman'
+import WarehouseManagerLayout from 'layout/WarehouseManager'
 
 function App() {
 	return (
@@ -128,6 +130,52 @@ function App() {
 					<Route path="notification" element={<NotificationPage />} />
 					<Route path="rating" element={<RatingManagementPage />} />
 					<Route path="shop-info" element={<ShopInfoPage />} />
+				</Route>
+
+				<Route path="/salesman" element={<SalesmanLayout />}>
+					<Route path="order" element={<OrderManagementPage />} />
+					<Route path="order/:orderId" element={<OrderDetailPage />} />
+					<Route path="customer" element={<CustomerPage />} />
+					<Route path="coupons" element={<CouponsPage />} />
+					<Route path="notification" element={<NotificationPage />} />
+					<Route path="rating" element={<RatingManagementPage />} />
+				</Route>
+
+				<Route path="/warehouse-manager" element={<WarehouseManagerLayout />}>
+					<Route path="supplier" element={<SupplierPage />} />
+
+					<Route path="product" element={<Outlet />}>
+						<Route path="brand" element={<BrandPage />} />
+						<Route path="add-product" element={<AddProductPage />} />
+						<Route
+							path="update-product/:productId"
+							element={<UpdateProductPage />}
+						/>
+						<Route path="product-list" element={<ProductListPage />} />
+						<Route
+							path="product-detail/:productId"
+							element={<ProductDetailPage />}
+						/>
+						<Route
+							path="option-detail/:productId"
+							element={<OptionListPage />}
+						/>
+					</Route>
+
+					<Route path="product-configuration" element={<Outlet />}>
+						<Route path="ram" element={<RamOptionPage />} />
+						<Route path="rom" element={<RomOptionPage />} />
+						<Route path="color" element={<ColorOptionPage />} />
+					</Route>
+
+					<Route path="warehouse" element={<Outlet />}>
+						<Route path="add-receipt" element={<AddReceiptPage />} />
+						<Route path="receipt-list" element={<ReceiptListPage />} />
+						<Route
+							path="receipt-detail/:receiptId"
+							element={<ReceiptDetailPage />}
+						/>
+					</Route>
 				</Route>
 
 				<Route path="*" element={<NotFound />} />

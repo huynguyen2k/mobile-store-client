@@ -1,5 +1,6 @@
 import { EyeOutlined, FileDoneOutlined } from '@ant-design/icons/lib/icons'
 import { Avatar, Button, Space, Table, Tooltip, Typography } from 'antd'
+import UserRoles from 'constants/UserRoles'
 import moment from 'moment'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
@@ -8,17 +9,19 @@ import formatCurrency from 'utils/formatCurrency'
 import formatDateTime from 'utils/formatDateTime'
 
 ReceiptTable.propTypes = {
+	user: PropTypes.object,
 	data: PropTypes.array,
 	loading: PropTypes.bool,
 }
 
 ReceiptTable.defaultProps = {
+	user: null,
 	data: [],
 	loading: false,
 }
 
 function ReceiptTable(props) {
-	const { data, loading } = props
+	const { user, data, loading } = props
 
 	const [selectedRowKeys, setSelectedRowKeys] = useState([])
 
@@ -102,7 +105,13 @@ function ReceiptTable(props) {
 				},
 				{
 					title: () => (
-						<Link to="/admin/warehouse/add-receipt">
+						<Link
+							to={`${
+								user?.role_name === UserRoles.ADMIN.name
+									? '/admin/warehouse/add-receipt'
+									: '/warehouse-manager/warehouse/add-receipt'
+							}`}
+						>
 							<Tooltip placement="topRight" title="Thêm phiếu nhập mới">
 								<Button
 									type="primary"
@@ -118,7 +127,13 @@ function ReceiptTable(props) {
 					),
 					dataIndex: 'action',
 					render: (value, record) => (
-						<Link to={`/admin/warehouse/receipt-detail/${record.id}`}>
+						<Link
+							to={`${
+								user?.role_name === UserRoles.ADMIN.name
+									? `/admin/warehouse/receipt-detail/${record.id}`
+									: `/warehouse-manager/warehouse/receipt-detail/${record.id}`
+							}`}
+						>
 							<Tooltip placement="topRight" title="Xem chi tiết phiếu nhập">
 								<Button
 									ghost

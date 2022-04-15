@@ -25,7 +25,13 @@ function CustomerPage() {
 			})
 			refetchData()
 		} catch (error) {
-			console.log(error)
+			Swal.fire({
+				title: 'Thông báo!',
+				text: error.message,
+				icon: 'error',
+				confirmButtonText: 'Xác nhận',
+				confirmButtonColor: 'var(--success)',
+			})
 		}
 	}
 
